@@ -9,7 +9,7 @@ import Courses from './pages/Courses';
 import Checkout from './pages/Checkout';
 import Login from './pages/Login';
 import Register from "./pages/Register";
-import Profile from './pages/UserProfile';
+import Profile from './pages/Userprofile';
 import CourseDetail from './components/CourseDetail';
 import Material from './pages/Material';
 import './App.css';
