@@ -9,7 +9,6 @@ import Courses from './pages/Courses';
 import Checkout from './pages/Checkout';
 import Login from './pages/Login';
 import Register from "./pages/Register";
-import Profile from './pages/Userprofile';
 import CourseDetail from './components/CourseDetail';
 import Material from './pages/Material';
 import './App.css';
@@ -23,7 +22,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/courses" element={<Courses  />} />
         <Route path="/cart" element={ <Checkout/>} />
-        <Route path="/profile" element={<Profile/>} />
+      
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/courses/:courseId" element={<CourseDetail/>} />
