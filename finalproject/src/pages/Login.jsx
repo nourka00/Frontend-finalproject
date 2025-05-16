@@ -47,8 +47,8 @@ const Login = () => {
     // Send data to the backend
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/auth/login",
-        // "https://myguide.onrender.com/api/auth/login",
+        //"http://localhost:3000/api/auth/login",
+         "https://myguide.onrender.com/api/auth/login",
         formData
       );
       console.log("Login successful:", response.data);

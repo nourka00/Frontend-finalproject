@@ -30,6 +30,12 @@ const Navbar = () => {
               className="dropdown-content"
               onMouseLeave={() => setDropdownOpen(false)}
             >
+              <Link
+                to="/login"
+                onClick={() => setDropdownOpen(false)}
+              >
+                Login
+              </Link>
               <Link to="/profile" onClick={() => setDropdownOpen(false)}>
                 User Page
               </Link>
@@ -39,6 +45,13 @@ const Navbar = () => {
               >
                 Course Materials
               </Link>
+              <Link
+                to="/logout"
+                onClick={() => setDropdownOpen(false)}
+              >
+                Logout
+              </Link>
+
             </div>
           )}
         </div>

@@ -1,0 +1,32 @@
+.review-item {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 1.5rem;
+  }
+  
+  .review-header {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+  }
+  
+  .reviewer-name {
+    font-weight: bold;
+  }
+  
+  .review-rating {
+    color: #f39c12;
+    font-weight: bold;
+  }
+  
+  .review-date {
+    color: #95a5a6;
+    font-size: 0.85rem;
+  }
+  
+  .review-comment {
+    margin: 0;
+    line-height: 1.5;
+    color: #333;
+  }

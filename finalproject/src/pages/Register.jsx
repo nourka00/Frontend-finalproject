@@ -65,7 +65,7 @@ const Register = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/auth/register",
+        "https://myguide.onrender.com/api/auth/register",
         formData,
         {
           withCredentials: true,

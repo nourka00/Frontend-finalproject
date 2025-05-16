@@ -1,15 +1,13 @@
-import { useState } from 'react'
-import React from "react";
-import axios from "axios";
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Home from './pages/Home';
-import Courses from './pages/Courses';
+import CoursesPage from './pages/CoursesPage';
 import Checkout from './pages/Checkout';
 import Login from './pages/Login';
 import Register from "./pages/Register";
-import CourseDetail from './components/CourseDetail';
+import CourseDetailPage from "./pages/CourseDetailPage";
 import Material from './pages/Material';
 import './App.css';
 function App() {
@@ -17,20 +15,19 @@ function App() {
 
   return (
     <Router>
-      <Routes>
-        <Route path="/home" element={<Home />} />
-        <Route path="/" element={<Home />} />
-        <Route path="/courses" element={<Courses  />} />
-        <Route path="/cart" element={ <Checkout/>} />
+      <main>
       
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/courses/:courseId" element={<CourseDetail/>} />
-        <Route
-          path="/course-material"
-          element={<Material />}
-        />
-      </Routes>
+        <Routes>
+          <Route path="/home" element={<Home />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/cart" element={<Checkout />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/courses" element={<CoursesPage />} />
+          <Route path="/courses/:id" element={<CourseDetailPage />} />
+          <Route path="/course-material" element={<Material />} />
+        </Routes>
+      </main>
       <ToastContainer position="top-right" autoClose={3000} />
     </Router>
   );

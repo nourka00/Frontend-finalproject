@@ -7,7 +7,7 @@ import imagehead from "../assets/imghead.png";
 import lunet from "../assets/lunet.png";
 import mechanical from "../assets/mechdesign.png";
 import programming from "../assets/programming.png";
-import ServicesGrid from "./ServicesGrid";
+import LineCo from "./LineCo";
 const ProfileCard = () => {
 
   return (
@@ -74,10 +74,7 @@ const ProfileCard = () => {
         </ul>
       </div>
       <div className="services" style={{ paddingTop: "1em"}}> 
-        <h2 style={{ borderBottom: "1px black solid", textAlign: "left" , paddingLeft:"2em" }}>
-          What can I help with?
-        </h2>
-        <ServicesGrid />
+        <LineCo />
       </div>
     </div>
   );

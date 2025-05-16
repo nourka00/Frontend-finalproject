@@ -1,0 +1,150 @@
+.center-line {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 0;
+  }
+  
+  .center-line::before {
+    content: '';
+    position: absolute;
+    width: 2px;
+    background-color: #000000;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    margin-left: -1px;
+  }
+  
+  .line-item {
+    padding: 10px 0;
+    position: relative;
+    width: 100%;
+    margin-bottom: 30px;
+  }
+  
+  .line-content {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center; /* Add this for vertical alignment */
+    min-height: 250px; /* Set a minimum height for consistent centering */
+  }
+  
+  .text-content {
+    width: 45%;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center vertically */
+    height: 100%;
+  }
+  
+  .description-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center vertically */
+    align-items: center; /* Center horizontally */
+    text-align: center; /* Center text */
+    flex-grow: 1;
+  }
+  
+  .image-content {
+    width: 45%;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    height: 100%;
+  }
+  
+  .image-content img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  
+  .line-marker {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+  }
+  
+  .marker-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: rgb(255, 255, 255);
+    border: 3px solid #000000;
+  }
+  
+  .marker-line {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 30px;
+    background-color: #000000;
+  }
+  
+  .text-content h2 {
+    margin: 10px 0 20px 0;
+    color: #2c3e50;
+    text-align: center; /* Center the title */
+  }
+  
+  .text-content p {
+    margin: 8px 0;
+    color: #555;
+    line-height: 1.5;
+  }
+  
+  /* Responsive layout */
+  @media (max-width: 768px) {
+    .center-line::before {
+      left: 40px;
+    }
+  
+    .line-item {
+      padding-left: 70px;
+    }
+  
+    .line-content {
+      flex-direction: column;
+      min-height: auto;
+    }
+  
+    .text-content,
+    .image-content {
+      width: 100%;
+      margin-bottom: 15px;
+    }
+  
+    .line-marker {
+      left: 40px;
+    }
+  
+    .image-content {
+      height: 200px; /* Fixed height for images on mobile */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .center-line::before {
+      left: 20px;
+    }
+  
+    .line-item {
+      padding-left: 50px;
+    }
+  
+    .line-marker {
+      left: 20px;
+    }
+  }
