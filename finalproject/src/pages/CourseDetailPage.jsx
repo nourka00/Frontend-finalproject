@@ -19,7 +19,7 @@ const CourseDetailPage = () => {
 
         // Fetch course details
         const courseResponse = await fetch(
-          `http://localhost:3000/api/courses/${id}`
+          `https://myguide.onrender.com/api/courses/${id}`
         );
         if (!courseResponse.ok) throw new Error("Failed to fetch course");
         const courseData = await courseResponse.json();
@@ -27,7 +27,7 @@ const CourseDetailPage = () => {
 
         // Fetch reviews
         const reviewsResponse = await fetch(
-          `http://localhost:3000/api/courses/${id}/reviews`
+          `https://myguide.onrender.com/api/courses/${id}/reviews`
         );
         if (!reviewsResponse.ok) throw new Error("Failed to fetch reviews");
         const reviewsData = await reviewsResponse.json();

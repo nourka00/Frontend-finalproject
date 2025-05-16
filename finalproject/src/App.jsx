@@ -9,6 +9,7 @@ import Login from './pages/Login';
 import Register from "./pages/Register";
 import CourseDetailPage from "./pages/CourseDetailPage";
 import Material from './pages/Material';
+import Profile from './pages/Userprofile';
 import './App.css';
 function App() {
   const [count, setCount] = useState(0)
@@ -26,6 +27,7 @@ function App() {
           <Route path="/courses" element={<CoursesPage />} />
           <Route path="/courses/:id" element={<CourseDetailPage />} />
           <Route path="/course-material" element={<Material />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </main>
       <ToastContainer position="top-right" autoClose={3000} />
