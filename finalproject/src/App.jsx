@@ -17,7 +17,6 @@ function App() {
   return (
     <Router>
       <main>
-      
         <Routes>
           <Route path="/home" element={<Home />} />
           <Route path="/" element={<Home />} />
@@ -28,6 +27,8 @@ function App() {
           <Route path="/courses/:id" element={<CourseDetailPage />} />
           <Route path="/course-material" element={<Material />} />
           <Route path="/profile" element={<Profile />} />
+          {/* In your routes */}
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
       <ToastContainer position="top-right" autoClose={3000} />
