@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Home from './pages/Home';
@@ -28,7 +28,7 @@ function App() {
           <Route path="/course-material" element={<Material />} />
           <Route path="/profile" element={<Profile />} />
           {/* In your routes */}
-          <Route path="*" element={<NotFound />} />
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </main>
       <ToastContainer position="top-right" autoClose={3000} />
