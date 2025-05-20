@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation,Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthProvider';
-
+import '../style/form.css';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -43,6 +43,12 @@ const Login = () => {
         />
         <button type="submit">Login</button>
       </form>
+      <div className="signup-cta">
+        <p>You don't have an account! Sign up</p>
+        <Link to="/register">
+          <button className="login-button">Register</button>
+        </Link>
+      </div>
     </div>
   );
 };

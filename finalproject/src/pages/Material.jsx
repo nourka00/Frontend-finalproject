@@ -2,7 +2,9 @@ import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../context/AuthProvider";
-
+import Navbar from "../components/header";
+import Footer from "../components/Footer";
+import "../style/Material.css";
 const MaterialsPage = () => {
   const [materials, setMaterials] = useState([]);
   const [loadingMaterials, setLoadingMaterials] = useState(true);
@@ -55,6 +57,8 @@ const MaterialsPage = () => {
   }
 
   return (
+    <div>
+      <Navbar />
     <div className="materials-container">
       <div className="user-greeting">
         <h2>Hello, {user.name}! 👋</h2>
@@ -75,6 +79,8 @@ const MaterialsPage = () => {
           </div>
         ))}
       </div>
+      </div>
+    <Footer  />
     </div>
   );
 };

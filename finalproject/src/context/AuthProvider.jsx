@@ -9,8 +9,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-  const baseURL = "https://myguide.onrender.com";
-
+  const baseURL ="https://myguide.onrender.com"; // Replace with your backend URL
   useEffect(() => {
     const initializeAuth = async () => {
       const token = localStorage.getItem("token");
@@ -51,7 +50,7 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     localStorage.removeItem("token");
     setUser(null);
-    navigate("/login");
+    navigate("/login", { replace: true });
   };
 
   return (
