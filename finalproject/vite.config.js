@@ -16,5 +16,20 @@ export default defineConfig({
   build: {
     outDir: "dist",
     emptyOutDir: true,
+    esbuild: {
+      loader: "jsx",
+    },
+    resolve: {
+      extensions: [".js", ".jsx", ".json"],
+    },
+  },
+  server: {
+    proxy: {
+      "/api": {
+        target: "https://myguide.onrender.com",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      },
+    },
   },
 });
