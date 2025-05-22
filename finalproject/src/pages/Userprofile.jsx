@@ -5,8 +5,8 @@ import "../style/userprof.css"; // Import your CSS file
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-
-
+import Navbar from "../components/header";
+import Footer from "../components/Footer";
 function Profile() {
   const { user, loading, setUser } = useContext(AuthContext);
   const [displayName, setDisplayName] = useState("");
@@ -98,6 +98,8 @@ function Profile() {
   }, [user, loading]);
   
   return (
+    <>
+      <Navbar />
     <div className="profile-container">
       <h2 className="profile-heading">User Profile</h2>
 
@@ -160,7 +162,9 @@ function Profile() {
           Update Password
         </button>
       </div>
-    </div>
+      </div>
+    <Footer />
+    </>
   );
 }
 
