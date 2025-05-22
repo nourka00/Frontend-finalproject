@@ -91,11 +91,9 @@ const Register = () => {
       );
 
       // Update loading toast to success
-      toast.update(toastId, {
-        render: "Registration successful! Redirecting to login...",
-        type: "success",
-        isLoading: false,
-        autoClose: 3000,
+      toast.success("Registration successful! Redirecting to login...", {
+        id: toastId,
+        duration: 3000,
       });
 
       // Navigate after a short delay
@@ -107,14 +105,14 @@ const Register = () => {
       );
 
       // Update loading toast to error
-      toast.update(toastId, {
-        render:
-          error.response?.data?.message ||
+      toast.error(
+        error.response?.data?.message ||
           "Registration failed. Please try again.",
-        type: "error",
-        isLoading: false,
-        autoClose: 5000,
-      });
+        {
+          id: toastId,
+          duration: 5000,
+        }
+      );
     }
   };
 

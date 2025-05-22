@@ -20,7 +20,10 @@ const Login = () => {
       navigate(from, { replace: true });
       
     } else {
-      toast.error(error || "Login failed. Please try again.");
+      toast.error(error || "Login failed. Please try again.", {
+        duration: 4000,
+      });
+      
     }
   };
 

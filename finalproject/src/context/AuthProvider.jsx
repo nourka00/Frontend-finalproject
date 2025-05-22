@@ -30,7 +30,9 @@ export const AuthProvider = ({ children }) => {
         }
 
         setUser(user);
-        toast.success("Welcome back!", { autoClose: 2000 });
+        toast.success("Welcome back!", {
+          duration: 2000,
+        });
       } catch (error) {
         localStorage.removeItem("token");
         toast.error("Session expired. Please login again.");
@@ -61,7 +63,11 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     localStorage.removeItem("token");
     setUser(null);
-    toast.info("You have been logged out.");
+    toast("You have been logged out.", {
+      icon: "👋",
+      duration: 3000,
+    });
+    
     navigate("/login", { replace: true });
   };
 
