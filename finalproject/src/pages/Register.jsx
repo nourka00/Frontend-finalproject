@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import "../style/form.css";
+
 const Register = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -11,8 +12,9 @@ const Register = () => {
     password: "",
   });
 
-  const [error, setError] = useState("");
   const navigate = useNavigate();
+
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,43 +27,59 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Client-side validation
-    if (
-      !formData.name ||
-      !formData.displayName ||
-      !formData.email ||
-      !formData.password
-    ) {
-      setError("All fields are required!");
-      toast.error("All fields are required!");
+    // Client-side validation with specific error messages
+    if (!formData.name) {
+      toast.error("Full name is required!", { toastId: "name-error" });
       return;
     }
 
     if (formData.name.length < 2) {
-      setError("Name must be at least 2 characters long.");
-      toast.error("Name must be at least 2 characters long.");
+      toast.error("Name must be at least 2 characters long.", {
+        toastId: "name-length-error",
+      });
+      return;
+    }
+
+    if (!formData.displayName) {
+      toast.error("Display name is required!", {
+        toastId: "displayname-error",
+      });
       return;
     }
 
     if (formData.displayName.length < 2) {
-      setError("Display Name must be at least 2 characters long.");
-      toast.error("Display Name must be at least 2 characters long.");
+      toast.error("Display Name must be at least 2 characters long.", {
+        toastId: "displayname-length-error",
+      });
+      return;
+    }
+
+    if (!formData.email) {
+      toast.error("Email is required!", { toastId: "email-error" });
       return;
     }
 
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      setError("Please enter a valid email address!");
-      toast.error("Please enter a valid email address!");
+      toast.error("Please enter a valid email address!", {
+        toastId: "email-format-error",
+      });
+      return;
+    }
+
+    if (!formData.password) {
+      toast.error("Password is required!", { toastId: "password-error" });
       return;
     }
 
     if (formData.password.length < 6) {
-      setError("Password must be at least 6 characters long.");
-      toast.error("Password must be at least 6 characters long.");
+      toast.error("Password must be at least 6 characters long.", {
+        toastId: "password-length-error",
+      });
       return;
     }
 
-    setError("");
+    // Show loading toast
+    const toastId = toast.loading("Processing your registration...");
 
     try {
       const response = await axios.post(
@@ -71,18 +89,32 @@ const Register = () => {
           withCredentials: true,
         }
       );
-      console.log("Registration successful:", response.data);
-      toast.success("Registration successful! You can now log in.");
-      navigate("/login");
+
+      // Update loading toast to success
+      toast.update(toastId, {
+        render: "Registration successful! Redirecting to login...",
+        type: "success",
+        isLoading: false,
+        autoClose: 3000,
+      });
+
+      // Navigate after a short delay
+      setTimeout(() => navigate("/login"), 3000);
     } catch (error) {
       console.error(
         "Registration failed:",
         error.response?.data || error.message
       );
-      toast.error(
-        error.response?.data?.message ||
-          "Registration failed. Please try again."
-      );
+
+      // Update loading toast to error
+      toast.update(toastId, {
+        render:
+          error.response?.data?.message ||
+          "Registration failed. Please try again.",
+        type: "error",
+        isLoading: false,
+        autoClose: 5000,
+      });
     }
   };
 
@@ -90,7 +122,6 @@ const Register = () => {
     <div className="register-container">
       <div className="form-section">
         <h2>Sign Up</h2>
-        {error && <div className="error-message">{error}</div>}
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label>Name</label>

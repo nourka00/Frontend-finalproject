@@ -1,0 +1,89 @@
+.profile-container {
+    max-width: 500px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 8px;
+  }
+  
+  /* .profile-heading {
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: black;
+    margin-bottom: 1rem;
+  } */
+  
+  .profile-section,
+  .password-section {
+    margin-top: 1.5rem;
+  }
+
+  .profile-label {
+    display: block;
+    font-weight: bolder;
+    margin-bottom: 0.5rem;
+    color: black;
+  }
+  
+  .profile-input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+  }
+  
+  .profile-image-wrapper {
+    margin-bottom: 1rem;
+  }
+  
+  .profile-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid red;
+  }
+  
+  .profile-button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: red;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 0.5rem;
+  }
+  
+  .profile-button:hover {
+    background-color: darkred;
+  }
+  
+  .btn-black {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 0.5rem;
+  }
+  
+  .btn-black:hover {
+    background-color: #333;
+  }
+  
+  .loading-text,
+  .error-text {
+    text-align: center;
+    padding: 1rem;
+    color: red;
+    font-weight: bold;
+  }
+  
