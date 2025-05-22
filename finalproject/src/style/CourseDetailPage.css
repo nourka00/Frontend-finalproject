@@ -1,123 +1,292 @@
+
 .course-detail-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem;
-  }
-  
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333; /* Dark gray text */
+}
+
+/* Loading and Error States */
+.loading {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+  color: #666; /* Medium gray */
+}
+
+.error {
+  text-align: center;
+  padding: 2rem;
+  color: #d32f2f; /* Red */
+  font-size: 1.2rem;
+}
+
+.not-found {
+  text-align: center;
+  padding: 2rem;
+  color: #666; /* Medium gray */
+  font-size: 1.2rem;
+}
+
+/* Course Header Section */
+.course-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-bottom: 3rem;
+  border-bottom: 1px solid #e0e0e0; /* Light gray */
+  padding-bottom: 2rem;
+}
+
+.course-image-container {
+  flex: 1;
+  min-width: 300px;
+}
+
+.course-main-image {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Black shadow */
+}
+
+.course-info {
+  flex: 2;
+  min-width: 300px;
+}
+
+.course-info h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #000; /* Black */
+}
+
+/* Course Meta */
+.course-meta {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.level-badge {
+  padding: 0.3rem 0.8rem;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  background-color: #f5f5f5; /* Light gray */
+  color: #333; /* Dark gray */
+}
+
+.level-badge.beginner {
+  background-color: #e8f5e9; /* Light green */
+  color: #2e7d32; /* Dark green */
+}
+
+.level-badge.intermediate {
+  background-color: #e3f2fd; /* Light blue */
+  color: #1565c0; /* Dark blue */
+}
+
+.level-badge.advanced {
+  background-color: #f3e5f5; /* Light purple */
+  color: #7b1fa2; /* Dark purple */
+}
+
+.schedule, .price {
+  padding: 0.3rem 0.8rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  background-color: #f5f5f5; /* Light gray */
+  color: #333; /* Dark gray */
+}
+
+.price {
+  font-weight: bold;
+  color: #d32f2f; /* Red */
+}
+
+/* Skills Section */
+.course-skills {
+  margin-bottom: 2rem;
+}
+
+.course-skills h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.8rem;
+  color: #000; /* Black */
+}
+
+.skills-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.skill-tag {
+  padding: 0.3rem 0.8rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  background-color: #f5f5f5; /* Light gray */
+  color: #333; /* Dark gray */
+}
+
+/* Enroll Button */
+.enroll-btn {
+  padding: 0.8rem 1.5rem;
+  background-color: #d32f2f; /* Red */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.enroll-btn:hover {
+  background-color: #b71c1c; /* Darker red */
+}
+
+/* Course Content */
+.course-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.course-description {
+  flex: 2;
+  min-width: 300px;
+}
+
+.course-description h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #000; /* Black */
+}
+
+.course-description p {
+  line-height: 1.6;
+  color: #424242; /* Dark gray */
+}
+
+/* Reviews Section */
+.course-reviews {
+  flex: 1;
+  min-width: 300px;
+}
+
+.course-reviews h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #000; /* Black */
+}
+
+.no-reviews {
+  color: #757575; /* Medium gray */
+  font-style: italic;
+}
+
+.review-access-msg {
+  color: #d32f2f; /* Red */
+  font-style: italic;
+}
+
+/* Popup/Checkout Form */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup-form {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Black shadow */
+}
+
+.popup-form h2 {
+  margin-bottom: 1.5rem;
+  color: #000; /* Black */
+}
+
+.popup-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #424242; /* Dark gray */
+}
+
+.popup-form select,
+.popup-form input[type="text"],
+.popup-form input[type="file"] {
+  width: 100%;
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  border: 1px solid #e0e0e0; /* Light gray */
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.popup-form select:focus,
+.popup-form input[type="text"]:focus {
+  outline: none;
+  border-color: #d32f2f; /* Red */
+}
+
+.confirm-btn {
+  padding: 0.8rem 1.5rem;
+  background-color: #d32f2f; /* Red */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-right: 1rem;
+  transition: background-color 0.3s;
+}
+
+.confirm-btn:hover {
+  background-color: #b71c1c; /* Darker red */
+}
+
+.cancel-btn {
+  padding: 0.8rem 1.5rem;
+  background-color: #f5f5f5; /* Light gray */
+  color: #333; /* Dark gray */
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.cancel-btn:hover {
+  background-color: #e0e0e0; /* Medium gray */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
   .course-header {
-    display: flex;
-    gap: 2rem;
-    margin-bottom: 3rem;
-    flex-wrap: wrap;
-  }
-  
-  .course-image-container {
-    flex: 1;
-    min-width: 300px;
-  }
-  
-  .course-main-image {
-    width: 100%;
-    max-height: 400px;
-    object-fit: cover;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  }
-  
-  .course-info {
-    flex: 1;
-    min-width: 300px;
-  }
-  
-  .course-info h1 {
-    margin-top: 0;
-    color: #2c3e50;
-  }
-  
-  .course-meta {
-    display: flex;
-    gap: 1rem;
-    margin: 1rem 0;
-    align-items: center;
-    flex-wrap: wrap;
-  }
-  
-  .level-badge {
-    padding: 0.3rem 0.8rem;
-    border-radius: 20px;
-    font-weight: bold;
-    text-transform: capitalize;
-  }
-  
-  .level-badge.beginner {
-    background-color: #d4edda;
-    color: #155724;
-  }
-  
-  .level-badge.intermediate {
-    background-color: #fff3cd;
-    color: #856404;
-  }
-  
-  .level-badge.mixed {
-    background-color: #cce5ff;
-    color: #004085;
-  }
-  
-  .schedule, .price {
-    padding: 0.3rem 0.8rem;
-    background-color: #f8f9fa;
-    border-radius: 20px;
-  }
-  
-  .price {
-    background-color: #f5ede8;
-    font-weight: bold;
-  }
-  
-  .course-skills h3 {
-    margin-bottom: 0.5rem;
-  }
-  
-  .skills-list {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-  }
-  
-  .enroll-btn {
-    background-color: #27ae60;
-    color: white;
-    border: none;
-    padding: 0.8rem 1.5rem;
-    border-radius: 4px;
-    font-size: 1rem;
-    cursor: pointer;
-    margin-top: 1rem;
-    transition: background-color 0.2s;
-  }
-  
-  .enroll-btn:hover {
-    background-color: #219653;
+    flex-direction: column;
   }
   
   .course-content {
-    margin-top: 2rem;
+    flex-direction: column;
   }
   
-  .course-description {
-    margin-bottom: 3rem;
-    line-height: 1.6;
+  .popup-form {
+    width: 95%;
+    padding: 1.5rem;
   }
-  
-  .course-reviews h2 {
-    margin-bottom: 1.5rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid #eee;
-  }
-  
-  .no-reviews {
-    color: #666;
-    font-style: italic;
-  }
-  
+}

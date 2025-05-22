@@ -3,6 +3,9 @@ import { useParams } from "react-router-dom";
 import ReviewList from "../components/ReviewList";
 import AddReviewForm from "../components/AddReviewForm";
 import "../style/CourseDetailPage.css";
+import Navbar from "../components/header";
+import Footer from "../components/Footer";
+import toast from "react-hot-toast";
 
 const CourseDetailPage = () => {
   const { id } = useParams();
@@ -11,32 +14,46 @@ const CourseDetailPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isEnrolled, setIsEnrolled] = useState(false); // You'll need to implement this based on your auth
-
+  const [showCheckout, setShowCheckout] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState("credit_card");
+  const [transactionId, setTransactionId] = useState("");
+  const [proofOfPayment, setProofOfPayment] = useState(null);
+  
   useEffect(() => {
     const fetchCourseData = async () => {
       try {
         setLoading(true);
 
-        // Fetch course details
-        const courseResponse = await fetch(
+        // Fetch course
+        const courseRes = await fetch(
           `https://myguide.onrender.com/api/courses/${id}`
         );
-        if (!courseResponse.ok) throw new Error("Failed to fetch course");
-        const courseData = await courseResponse.json();
+        const courseData = await courseRes.json();
         setCourse(courseData);
 
         // Fetch reviews
-        const reviewsResponse = await fetch(
+        const reviewsRes = await fetch(
           `https://myguide.onrender.com/api/courses/${id}/reviews`
         );
-        if (!reviewsResponse.ok) throw new Error("Failed to fetch reviews");
-        const reviewsData = await reviewsResponse.json();
+        const reviewsData = await reviewsRes.json();
         setReviews(reviewsData);
 
-        // Check if user is enrolled (you'll need to implement this)
-        // setIsEnrolled(await checkEnrollment(id));
+        // Check enrollment
+        const token = localStorage.getItem("token");
+        const enrollRes = await fetch(
+          `https://myguide.onrender.com/api/purchases/courses/${id}/enrollment`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        const enrollData = await enrollRes.json();
+        setIsEnrolled(enrollData.enrolled);
       } catch (err) {
+        toast.error(`Failed to load course data: ${err.message}`);
         setError(err.message);
+        
       } finally {
         setLoading(false);
       }
@@ -44,7 +61,7 @@ const CourseDetailPage = () => {
 
     fetchCourseData();
   }, [id]);
-
+  
   const handleAddReview = async (reviewData) => {
     try {
       const token = localStorage.getItem("token"); // Assuming you store JWT token
@@ -60,20 +77,67 @@ const CourseDetailPage = () => {
         }
       );
 
-      if (!response.ok) throw new Error("Failed to add review");
+      if (!response.ok) {
+        toast.error("Failed to add review");
+        return;
+      }
+      
 
       const newReview = await response.json();
       setReviews([...reviews, newReview]);
     } catch (err) {
-      console.error("Error adding review:", err);
+      toast.error("Error adding review");
+
     }
   };
+  const handleEnroll = async () => {
+    const token = localStorage.getItem("token");
+
+    if (!transactionId || !proofOfPayment) {
+      toast.error(
+        "Please fill in all fields including transaction ID and proof of payment."
+      );
+      return;
+    }
+    
+    console.log("Enrolling in course id:", id);
+    const formData = new FormData();
+    formData.append("course_id", id);
+    formData.append("payment_method", paymentMethod);
+    formData.append("transaction_id", transactionId);
+    formData.append("proof_of_payment", proofOfPayment);
+
+    try {
+      const response = await fetch(`https://myguide.onrender.com/api/purchases`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const errRes = await response.json();
+        toast.error(errRes.error || "Enrollment failed");
+        return;
+      }
+      
+      toast.success("Enrollment successful!");
+
+      setIsEnrolled(true);
+      setShowCheckout(false);
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+  
 
   if (loading) return <div className="loading">Loading course details...</div>;
   if (error) return <div className="error">Error: {error}</div>;
   if (!course) return <div className="not-found">Course not found</div>;
 
   return (
+    <><Navbar />
     <div className="course-detail-container">
       <div className="course-header">
         <div className="course-image-container">
@@ -110,7 +174,9 @@ const CourseDetailPage = () => {
             </div>
           </div>
 
-          <button className="enroll-btn">Enroll Now</button>
+          <button className="enroll-btn" onClick={() => setShowCheckout(true)}>
+            Enroll Now
+          </button>
         </div>
       </div>
 
@@ -131,10 +197,63 @@ const CourseDetailPage = () => {
             </p>
           )}
 
-          {isEnrolled && <AddReviewForm onSubmit={handleAddReview} />}
+          {/* {isEnrolled && <AddReviewForm onSubmit={handleAddReview} />} */}
+          {isEnrolled ? (
+            <AddReviewForm onSubmit={handleAddReview} />
+          ) : (
+            <p className="review-access-msg">
+              You must enroll to leave a review.
+            </p>
+          )}
         </div>
       </div>
-    </div>
+      {showCheckout && (
+        <div className="popup-overlay">
+          <div className="popup-form">
+            <h2>Checkout</h2>
+
+            <label>Payment Method</label>
+            <select
+              value={paymentMethod}
+              onChange={(e) => setPaymentMethod(e.target.value)}
+            >
+              <option value="credit_card">Credit Card</option>
+              <option value="paypal">PayPal</option>
+              <option value="bank_transfer">Bank Transfer</option>
+              <option value="OMT">OMT</option>
+              <option value="mobile_wallet">Mobile Wallet</option>
+            </select>
+
+            <label>Transaction ID</label>
+            <input
+              type="text"
+              value={transactionId}
+              onChange={(e) => setTransactionId(e.target.value)}
+              placeholder="Enter transaction ID"
+            />
+
+            <label>Proof of Payment (image)</label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => setProofOfPayment(e.target.files[0])}
+            />
+
+            <button className="confirm-btn" onClick={handleEnroll}>
+              Confirm Enrollment
+            </button>
+            <button
+              className="cancel-btn"
+              onClick={() => setShowCheckout(false)}
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
+      </div>
+      <Footer />
+    </>
   );
 };
 

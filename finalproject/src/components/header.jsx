@@ -39,9 +39,9 @@ const Navbar = () => {
         <Link to="/courses" onClick={closeAllMenus}>
           COURSES
         </Link>
-        <Link to="/cart" onClick={closeAllMenus}>
+        {/* <Link to="/cart" onClick={closeAllMenus}>
           <FiShoppingCart className="nav-icon" />
-        </Link>
+        </Link> */}
 
         <div className="dropdown">
           <button className="icon-btn user-icon" onClick={toggleDropdown}>

@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route, Link, Navigate } from "react-ro
 import { Toaster } from "react-hot-toast";
 import Home from './pages/Home';
 import CoursesPage from './pages/CoursesPage';
-import Checkout from './pages/Checkout';
+// import Checkout from './pages/Checkout';
 import Login from './pages/Login';
 import Register from "./pages/Register";
 import CourseDetailPage from "./pages/CourseDetailPage";
@@ -21,7 +21,7 @@ function App() {
         <Routes>
           <Route path="/home" element={<Home />} />
           <Route path="/" element={<Home />} />
-          <Route path="/cart" element={<Checkout />} />
+          {/* <Route path="/cart" element={<Checkout />} /> */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/courses" element={<CoursesPage />} />
