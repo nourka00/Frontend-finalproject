@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
-import "../style/UsersTable.css"; // Assuming you have a CSS file for styling
+import "../style/usersTable.css"; // Assuming you have a CSS file for styling
 const UsersTable = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
