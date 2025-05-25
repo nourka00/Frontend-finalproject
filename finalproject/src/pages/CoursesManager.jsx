@@ -34,7 +34,7 @@ const CoursesManager = () => {
     file: null,
   });
 
-  const API_URL = "http://localhost:3000/api";
+  const baseURL = "https://myguide.onrender.com/api";
 
   const getAuthHeaders = () => {
     const token = localStorage.getItem("token");
@@ -67,7 +67,7 @@ const CoursesManager = () => {
 
   const fetchCourses = async () => {
     try {
-      const response = await axios.get(`${API_URL}/courses`);
+      const response = await axios.get(`${baseURL}/courses`);
       setCourses(response.data);
       setLoading(false);
     } catch (err) {
@@ -82,7 +82,7 @@ const CoursesManager = () => {
       if (!headers) return;
 
       const response = await axios.get(
-        `${API_URL}/materials/materials`,
+        `${baseURL}/materials/materials`,
         headers
       );
 
@@ -117,7 +117,7 @@ const CoursesManager = () => {
       let response;
       if (editingCourse) {
         response = await axios.put(
-          `${API_URL}/courses/${editingCourse.id}`,
+          `${baseURL}/courses/${editingCourse.id}`,
           formDataObj,
           headers
         );
@@ -126,7 +126,7 @@ const CoursesManager = () => {
         );
         toast.success("Course updated successfully");
       } else {
-        response = await axios.post(`${API_URL}/courses`, formDataObj, headers);
+        response = await axios.post(`${baseURL}/courses`, formDataObj, headers);
         setCourses([...courses, response.data]);
         toast.success("Course created successfully");
       }
@@ -148,7 +148,7 @@ const CoursesManager = () => {
         const headers = getAuthHeaders();
         if (!headers) return;
 
-        await axios.delete(`${API_URL}/courses/${id}`, headers);
+        await axios.delete(`${baseURL}/courses/${id}`, headers);
         setCourses(courses.filter((c) => c.id !== id));
         toast.success("Course deleted successfully");
       } catch (err) {
@@ -181,7 +181,7 @@ const CoursesManager = () => {
       formDataObj.append("file", materialForm.file);
 
       const response = await axios.post(
-        `${API_URL}/upload-material`,
+        `${baseURL}/upload-material`,
         formDataObj,
         headers
       );
@@ -229,7 +229,7 @@ const CoursesManager = () => {
       const headers = getAuthHeaders();
       if (!headers) return;
 
-      const response = await axios.delete(`${API_URL}/${id}`, headers);
+      const response = await axios.delete(`${baseURL}/${id}`, headers);
 
       if (response.data.message === "File deleted successfully") {
         setMaterials(materials.filter((m) => m.id !== id));

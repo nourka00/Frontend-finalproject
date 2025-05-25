@@ -14,7 +14,7 @@ const MaterialsPage = () => {
   const { user, logout } = useContext(AuthContext);
   const [celebrate, setCelebrate] = useState(false);
   const navigate = useNavigate();
-  const baseURL = "http://localhost:3000"; // Update this to your actual base URL
+  const baseURL = "https://myguide.onrender.com";
 
   useEffect(() => {
     if (!user) return;

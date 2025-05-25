@@ -8,12 +8,12 @@ const EnrollmentsTable = () => {
   const [error, setError] = useState(null);
   const [selectedEnrollment, setSelectedEnrollment] = useState(null);
   const [showDetails, setShowDetails] = useState(false);
-  const API_URL = "http://localhost:3000/api";
+  const baseURL = "https://myguide.onrender.com/api";
   const token = localStorage.getItem("token");
 
   const fetchEnrollments = async () => {
     try {
-      const response = await axios.get(`${API_URL}/purchases/enrollments`, {
+      const response = await axios.get(`${baseURL}/purchases/enrollments`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       return response.data;
@@ -25,7 +25,7 @@ const EnrollmentsTable = () => {
   const updateEnrollmentStatus = async (enrollmentId, newStatus) => {
     try {
       const response = await axios.patch(
-        `${API_URL}/purchases/${enrollmentId}/status`,
+        `${baseURL}/purchases/${enrollmentId}/status`,
         { status: newStatus },
         { headers: { Authorization: `Bearer ${token}` } }
       );

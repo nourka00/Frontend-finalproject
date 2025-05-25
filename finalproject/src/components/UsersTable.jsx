@@ -7,12 +7,12 @@ const UsersTable = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [editingUser, setEditingUser] = useState(null);
-  const API_URL = "http://localhost:3000/api";
+  const baseURL = "https://myguide.onrender.com/api";
   const token = localStorage.getItem("token");
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get(`${API_URL}/users`, {
+      const response = await axios.get(`${baseURL}/users`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       return response.data;
@@ -23,7 +23,7 @@ const UsersTable = () => {
 
   const deleteUser = async (userId) => {
     try {
-      await axios.delete(`${API_URL}/users/${userId}`, {
+      await axios.delete(`${baseURL}/users/${userId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success("User deleted successfully");
@@ -37,7 +37,7 @@ const UsersTable = () => {
   const updateUserRole = async (userId, newRole) => {
     try {
       const response = await axios.patch(
-        `${API_URL}/users/${userId}/role`,
+        `${baseURL}/users/${userId}/role`,
         { role: newRole },
         { headers: { Authorization: `Bearer ${token}` } }
       );

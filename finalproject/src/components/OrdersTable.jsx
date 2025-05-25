@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import "../style/ordersTable.css"; // Assuming you have a CSS file for styling
-const API_URL = "http://localhost:3000/api";
+const baseURL = "https://myguide.onrender.com/api";
 const token = localStorage.getItem("token");
 
 const Modal = ({ title, children, onClose }) => (
@@ -113,7 +113,7 @@ const OrdersTable = () => {
   useEffect(() => {
     (async () => {
       try {
-        const { data } = await axios.get(`${API_URL}/purchases/orders`, {
+        const { data } = await axios.get(`${baseURL}/purchases/orders`, {
           withCredentials: true,
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -130,7 +130,7 @@ const OrdersTable = () => {
   const handleStatusUpdate = async (newStatus) => {
     try {
       const { data: updatedOrder } = await axios.patch(
-        `${API_URL}/purchases/${selectedOrder.id}/status`,
+        `${baseURL}/purchases/${selectedOrder.id}/status`,
         { status: newStatus },
         {
           headers: {
@@ -151,7 +151,7 @@ const OrdersTable = () => {
   };
   const handleDeleteOrder = async (orderId) => {
     try {
-      await axios.delete(`${API_URL}/purchases/${orderId}`, {
+      await axios.delete(`${baseURL}/purchases/${orderId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setOrders(orders.filter((order) => order.id !== orderId));
