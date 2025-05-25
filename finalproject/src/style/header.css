@@ -151,3 +151,17 @@
   .user-icon {
     display: flex; /* Force user icon to show */
   }
+  /* In header.css */
+.navbar-right a[href="/admin"] {
+  color: #ff5722; /* Example admin color */
+  font-weight: bold;
+}
+
+/* Or if you want an admin badge look */
+.navbar-right a[href="/admin"] {
+  background-color: #ff0000;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  margin: 0 5px;
+}

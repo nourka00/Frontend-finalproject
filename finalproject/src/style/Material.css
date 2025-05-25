@@ -1,22 +1,22 @@
-
+/* 
 .material-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 10px;
-    background-color: #f5f5f5; /* Light gray background */
-    color: #333; /* Dark gray text */
+    background-color: #f5f5f5;
+    color: #333; 
   }
   
   .material-container h1 {
-    color: #000; /* Black for headings */
+    color: #000; 
     margin-bottom: 1.5rem;
   }
   
   .material-container h2 {
-    color: #d32f2f; /* Red for welcome message */
+    color: #d32f2f; 
     margin-bottom: 1rem;
   }
-  
+
   .no-materials {
     text-align: center;
     padding: 2rem;
@@ -26,8 +26,7 @@
   }
   
   .enroll-button {
-    background-color: #d32f2f; /* Red button */
-    color: white;
+    background-color: #d32f2f; 
     border: none;
     padding: 0.5rem 1rem;
     border-radius: 4px;
@@ -37,9 +36,9 @@
   }
   
   .enroll-button:hover {
-    background-color: #b71c1c; /* Darker red on hover */
-  }
-  
+    background-color: #b71c1c;
+  } */
+/*   
   .materials-grid {
     display: flex;
     flex-wrap: wrap;
@@ -47,17 +46,17 @@
     align-items: center;
     gap: 1.5rem;
     margin-top: 1.5rem;
-  }
+  } */
   
-  .material-card {
+  /* .material-card {
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     position: relative;
     margin-bottom: 1.5rem;
-    width:50%; /* Fixed width for cards */
-    transition: transform 0.2s;
-  }
+    width:50%;
+    transition: transform 0.2s; */
+  /* }
   
   .material-card:hover {
     transform: translateY(-5px);
@@ -72,9 +71,9 @@
   .material-header h3 {
     margin: 0;
     color: #000;
-  }
+  } */
   
-  .course-name {
+  /* .course-name {
     display: block;
     font-size: 0.9rem;
     color: #666;
@@ -90,24 +89,319 @@
     margin-top: 1.5rem;
     display: flex;
     justify-content: flex-end;
-  }
-  
+  } */
+/*   
   .download-button {
-    background-color: #333; /* Dark gray button */
+    background-color: #333; 
     color: white;
     border: none;
     padding: 0.5rem 1rem;
     border-radius: 4px;
     cursor: pointer;
   }
-  
-  .download-button:hover {
-    background-color: #000; /* Black on hover */
-  }
+   */
+  /* .download-button:hover {
+    background-color: #000;  */
+  /* }
   
   .loading {
     text-align: center;
     padding: 2rem;
     font-size: 1.2rem;
     color: #666;
+  } */
+   /* Base Styles */
+.page-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #f5f7fa;
+}
+
+.materials-page {
+  flex: 1;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Loading State */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 50vh;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Error State */
+.error-message {
+  padding: 2rem;
+  text-align: center;
+  color: #e74c3c;
+  background-color: #fdecea;
+  border-radius: 8px;
+  margin: 2rem;
+  font-weight: 500;
+}
+
+/* No Materials State */
+.no-materials-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+  text-align: center;
+}
+
+.no-materials-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  max-width: 500px;
+  width: 100%;
+}
+
+.no-materials-content h2 {
+  color: #2c3e50;
+  margin-bottom: 1rem;
+}
+
+.no-materials-content p {
+  color: #7f8c8d;
+  margin-bottom: 1.5rem;
+}
+
+.browse-btn {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.browse-btn:hover {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+}
+
+/* User Header */
+.user-header {
+  margin-bottom: 2rem;
+}
+
+.user-info h2 {
+  font-size: 2rem;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.wave {
+  animation: wave 2s infinite;
+  display: inline-block;
+  transform-origin: 70% 70%;
+}
+
+.sparkle {
+  margin-left: 0.5rem;
+  animation: sparkle 1.5s infinite alternate;
+}
+
+@keyframes wave {
+  0% { transform: rotate(0deg); }
+  10% { transform: rotate(-10deg); }
+  20% { transform: rotate(12deg); }
+  30% { transform: rotate(-10deg); }
+  40% { transform: rotate(9deg); }
+  50% { transform: rotate(0deg); }
+  100% { transform: rotate(0deg); }
+}
+
+@keyframes sparkle {
+  0% { opacity: 0.5; transform: scale(1); }
+  100% { opacity: 1; transform: scale(1.2); }
+}
+
+.role-badge {
+  display: inline-block;
+  padding: 0.3rem 0.8rem;
+  background-color: #e8f4fc;
+  color: #3498db;
+  border-radius: 20px;
+  font-size: 0.9rem;
+}
+
+/* Page Title */
+.page-title {
+  font-size: 1.8rem;
+  color: #2c3e50;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+/* Materials Grid */
+.materials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+/* Material Card - Shared */
+.material-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+.material-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.card-content {
+  padding: 1.5rem;
+}
+
+.material-card h3 {
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.material-type {
+  color: #7f8c8d;
+  font-size: 0.9rem;
+  margin-bottom: 1.2rem;
+}
+
+.download-btn {
+  width: 100%;
+  padding: 0.7rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Student Specific Styles */
+.material-card.student {
+  border-top: 4px solid #3498db;
+}
+
+.material-card.student .download-btn {
+  background-color: #3498db;
+  color: white;
+}
+
+.material-card.student .download-btn:hover {
+  background-color: #2980b9;
+}
+
+.material-card.student .card-decoration {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  background-color: #3498db;
+  clip-path: polygon(0 0, 100% 0, 100% 100%);
+  opacity: 0.1;
+}
+
+/* Admin Specific Styles */
+.material-card.admin {
+  border-top: 4px solid #2ecc71;
+}
+
+.material-card.admin .download-btn {
+  background-color: #f8f9fa;
+  color: #2c3e50;
+  border: 1px solid #e0e0e0;
+}
+
+.material-card.admin .download-btn:hover {
+  background-color: #e9ecef;
+}
+
+/* Celebration Effects */
+.celebration-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+  pointer-events: none;
+  z-index: 100;
+  animation: fadeOut 3s forwards;
+}
+
+@keyframes fadeOut {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .materials-page {
+    padding: 1.5rem;
   }
+  
+  .user-info h2 {
+    font-size: 1.6rem;
+  }
+  
+  .page-title {
+    font-size: 1.5rem;
+  }
+  
+  .materials-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .materials-page {
+    padding: 1rem;
+  }
+  
+  .user-info h2 {
+    font-size: 1.4rem;
+  }
+  
+  .page-title {
+    font-size: 1.3rem;
+  }
+  
+  .material-card {
+    min-width: 100%;
+  }
+}

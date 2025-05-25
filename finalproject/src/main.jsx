@@ -5,7 +5,7 @@ import { StrictMode } from "react";
 import "./index.css";
 import App from "./App.jsx";
 import { AuthProvider } from "./context/AuthProvider";
-
+import { Provider } from "react-redux"; 
 // Get the root element
 const container = document.getElementById("root");
 const root = createRoot(container);
@@ -15,7 +15,9 @@ root.render(
   <StrictMode>
     <BrowserRouter>
       <AuthProvider>
-        <App />
+
+          <App />
+       
       </AuthProvider>
     </BrowserRouter>
   </StrictMode>

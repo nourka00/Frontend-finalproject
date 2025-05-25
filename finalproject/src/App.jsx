@@ -1,19 +1,27 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, Navigate } from "react-router-dom";
+import React, { useState } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  Navigate,
+} from "react-router-dom";
 
 import { Toaster } from "react-hot-toast";
-import Home from './pages/Home';
-import CoursesPage from './pages/CoursesPage';
+import Home from "./pages/Home";
+import CoursesPage from "./pages/CoursesPage";
 // import Checkout from './pages/Checkout';
-import Login from './pages/Login';
+import Login from "./pages/Login";
 import Register from "./pages/Register";
 import CourseDetailPage from "./pages/CourseDetailPage";
-import Material from './pages/Material';
-import Profile from './pages/Userprofile';
-import './App.css';
+import Material from "./pages/Material";
+import Profile from "./pages/Userprofile";
+import "./App.css";
+import AdminDashboard from "./pages/AdminDashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
+// import PrivateAdminRoute from "./context/PrivateAdminRoute";
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   return (
     <>
@@ -37,9 +45,11 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           {/* In your routes */}
           <Route path="*" element={<Navigate to="/" />} />
+      
+          <Route path="/admin" element={<AdminDashboard />} />
         </Routes>
       </main>
-   
+
       <Toaster
         position="top-right"
         toastOptions={{
@@ -60,6 +70,6 @@ function App() {
       />
     </>
   );
-};
+}
 
 export default App;

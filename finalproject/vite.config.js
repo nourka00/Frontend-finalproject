@@ -26,7 +26,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "https://myguide.onrender.com", // Replace with your backend URL
+        target: "http://localhost:3000", // Replace with your backend URL
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ""),
       },

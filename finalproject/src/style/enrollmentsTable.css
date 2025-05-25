@@ -1,0 +1,258 @@
+/* enrollments-table.css - Styles for Enrollments Management */
+
+/* Base Container */
+.enrollments-table {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+  }
+  
+  .enrollments-table h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: #2c3e50;
+    font-weight: 600;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 0.5rem;
+  }
+  
+  /* Table Styles */
+  .enrollments-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .enrollments-table thead {
+    background-color: #3498db;
+    color: white;
+  }
+  
+  .enrollments-table th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+  }
+  
+  .enrollments-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #ecf0f1;
+    vertical-align: middle;
+  }
+  
+  .enrollments-table tr:last-child td {
+    border-bottom: none;
+  }
+  
+  .enrollments-table tr:hover {
+    background-color: #f8f9fa;
+  }
+  
+  /* Status Select Dropdown */
+  .status-select {
+    padding: 0.5rem;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    font-size: 0.9rem;
+    cursor: pointer;
+    min-width: 120px;
+    transition: all 0.2s;
+  }
+  
+  .status-select:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+  }
+  
+  /* Status-specific colors */
+  .status-select.pending {
+    background-color: #fff3cd;
+    color: #856404;
+  }
+  
+  .status-select.completed {
+    background-color: #d4edda;
+    color: #155724;
+  }
+  
+  .status-select.failed {
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+  
+  /* Button Styles */
+  .btn-view {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    background-color: #17a2b8;
+    color: white;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .btn-view:hover {
+    background-color: #138496;
+  }
+  
+  /* Modal Styles */
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    background-color: white;
+    border-radius: 8px;
+    padding: 2rem;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  .modal-content h3 {
+    margin-top: 0;
+    color: #2c3e50;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 0.5rem;
+  }
+  
+  .modal-content p {
+    margin: 1rem 0;
+    line-height: 1.6;
+  }
+  
+  .modal-content strong {
+    color: #2c3e50;
+    min-width: 120px;
+    display: inline-block;
+  }
+  
+  .modal-content a {
+    color: #3498db;
+    text-decoration: none;
+    margin-left: 0.5rem;
+  }
+  
+  .modal-content a:hover {
+    text-decoration: underline;
+  }
+  
+  .modal-content button {
+    padding: 0.75rem 1.5rem;
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: all 0.2s;
+  }
+  
+  .modal-content button:hover {
+    background-color: #5a6268;
+  }
+  
+  /* Loading and Error States */
+  .enrollments-table .loading,
+  .enrollments-table .error {
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.1rem;
+  }
+  
+  .enrollments-table .error {
+    color: #e74c3c;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .enrollments-table {
+      padding: 1rem;
+    }
+    
+    .enrollments-table table {
+      display: block;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+    
+    .enrollments-table th,
+    .enrollments-table td {
+      padding: 0.75rem 0.5rem;
+    }
+    
+    .status-select {
+      min-width: 100px;
+    }
+    
+    .modal-content {
+      width: 95%;
+      padding: 1.5rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .enrollments-table h2 {
+      font-size: 1.5rem;
+    }
+    
+    .enrollments-table td {
+      display: block;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    
+    .enrollments-table td::before {
+      content: attr(data-label);
+      font-weight: bold;
+      display: inline-block;
+      width: 120px;
+      color: #7f8c8d;
+    }
+    
+    .enrollments-table tr {
+      display: block;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid #eee;
+    }
+    
+    .enrollments-table thead {
+      display: none;
+    }
+    
+    .modal-content p {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    
+    .modal-content strong {
+      width: 100%;
+      margin-bottom: 0.25rem;
+    }
+    
+    .modal-content a {
+      margin-left: 0;
+    }
+  }
