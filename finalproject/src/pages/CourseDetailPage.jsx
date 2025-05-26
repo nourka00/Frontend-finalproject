@@ -39,7 +39,7 @@ const CourseDetailPage = () => {
         setReviews(reviewsData);
         //fetch related course 
         const relatedRes = await fetch(
-          `http://localhost:3000/api/courses/${id}/related`
+          `https://myguide.onrender.com/api/courses/${id}/related`
         );
         const relatedData = await relatedRes.json();
         setRelatedCourses(relatedData);
