@@ -1,116 +1,4 @@
-/* 
-.material-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 10px;
-    background-color: #f5f5f5;
-    color: #333; 
-  }
-  
-  .material-container h1 {
-    color: #000; 
-    margin-bottom: 1.5rem;
-  }
-  
-  .material-container h2 {
-    color: #d32f2f; 
-    margin-bottom: 1rem;
-  }
 
-  .no-materials {
-    text-align: center;
-    padding: 2rem;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .enroll-button {
-    background-color: #d32f2f; 
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 1rem;
-    margin-top: 1rem;
-  }
-  
-  .enroll-button:hover {
-    background-color: #b71c1c;
-  } */
-/*   
-  .materials-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 1.5rem;
-    margin-top: 1.5rem;
-  } */
-  
-  /* .material-card {
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    position: relative;
-    margin-bottom: 1.5rem;
-    width:50%;
-    transition: transform 0.2s; */
-  /* }
-  
-  .material-card:hover {
-    transform: translateY(-5px);
-  }
-  
-  .material-header {
-    border-bottom: 1px solid #e0e0e0;
-    padding-bottom: 0.5rem;
-    margin-bottom: 1rem;
-  }
-  
-  .material-header h3 {
-    margin: 0;
-    color: #000;
-  } */
-  
-  /* .course-name {
-    display: block;
-    font-size: 0.9rem;
-    color: #666;
-    margin-top: 0.3rem;
-  }
-  
-  .material-body p {
-    margin: 0.5rem 0;
-    color: #555;
-  }
-  
-  .material-actions {
-    margin-top: 1.5rem;
-    display: flex;
-    justify-content: flex-end;
-  } */
-/*   
-  .download-button {
-    background-color: #333; 
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-   */
-  /* .download-button:hover {
-    background-color: #000;  */
-  /* }
-  
-  .loading {
-    text-align: center;
-    padding: 2rem;
-    font-size: 1.2rem;
-    color: #666;
-  } */
-   /* Base Styles */
 .page-container {
   min-height: 100vh;
   display: flex;
@@ -248,7 +136,7 @@
   display: inline-block;
   padding: 0.3rem 0.8rem;
   background-color: #e8f4fc;
-  color: #3498db;
+  color: #db3434;
   border-radius: 20px;
   font-size: 0.9rem;
 }
@@ -313,7 +201,7 @@
 
 /* Student Specific Styles */
 .material-card.student {
-  border-top: 4px solid #3498db;
+  border-top: 4px solid #db343436;
 }
 
 .material-card.student .download-btn {
@@ -331,14 +219,14 @@
   right: 0;
   width: 40px;
   height: 40px;
-  background-color: #3498db;
+  background-color: #db3434;
   clip-path: polygon(0 0, 100% 0, 100% 100%);
   opacity: 0.1;
 }
 
 /* Admin Specific Styles */
 .material-card.admin {
-  border-top: 4px solid #2ecc71;
+  border-top: 4px solid #cc2e2e;
 }
 
 .material-card.admin .download-btn {

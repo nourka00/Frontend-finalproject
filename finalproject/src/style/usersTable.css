@@ -1,201 +1,341 @@
-/* users-table.css - Styles for Users Management Table */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-/* Base Container */
+/* Container styles */
 .users-table {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #333;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: white;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+/* Heading styles */
+.users-table h2 {
+  color: black;
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-bottom: 10px;
+}
+
+/* Table styles */
+.users-table table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  border: 2px solid #e0e0e0;
+}
+
+.users-table thead {
+  background-color: black;
+}
+
+.users-table thead th {
+  color: white;
+  font-weight: bold;
+  padding: 16px 12px;
+  text-align: left;
+  font-size: 0.895rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.users-table tbody tr {
+  border-bottom: 1px solid #e0e0e0;
+  transition: background-color 0.2s ease;
+}
+
+.users-table tbody tr:hover {
+  background-color: #f8f8f8;
+}
+
+.users-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.users-table tbody td {
+  padding: 16px 12px;
+  color: black;
+  vertical-align: middle;
+}
+
+/* Avatar styles - FIXED VERTICAL ALIGNMENT */
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid red;
+  display: block;
+  margin: 0 auto;
+}
+
+.avatar-placeholder {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: gray;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin: 0 auto;
+}
+
+/* Role badge styles */
+.role-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.role-badge.admin {
+  background-color: red;
+  color: white;
+}
+
+.role-badge.student {
+  background-color: gray;
+  color: white;
+}
+
+/* Role select styles */
+.role-select {
+  padding: 6px 10px;
+  border: 2px solid gray;
+  border-radius: 6px;
+  background-color: white;
+  color: black;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.role-select:focus {
+  outline: none;
+  border-color: red;
+}
+
+/* Button styles - SUPER SPECIFIC TO OVERRIDE EVERYTHING */
+.users-table .btn-edit,
+.users-table .btn-delete,
+.users-table tbody td .btn-edit,
+.users-table tbody td .btn-delete,
+button.btn-edit,
+button.btn-delete {
+  display: inline-block;
+  visibility: visible ;
+  opacity: 1 ;
+  position: relative;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  margin-right: 8px;
+  margin-bottom: 4px;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  clip: auto;
+  white-space: nowrap;
+}
+
+.users-table .btn-edit,
+.users-table tbody td .btn-edit,
+button.btn-edit {
+  background-color: gray;
+  color: white;
+}
+
+.users-table .btn-edit:hover,
+button.btn-edit:hover {
+  background-color: #555;
+  transform: translateY(-1px);
+}
+
+.users-table .btn-delete,
+.users-table tbody td .btn-delete,
+button.btn-delete {
+  background-color: red;
+  color: white;
+}
+
+.users-table .btn-delete:hover,
+button.btn-delete:hover {
+  background-color: #cc0000;
+  transform: translateY(-1px);
+}
+
+/* Fix the first table cell (Profile column) alignment */
+.users-table tbody td:first-child {
+  text-align: center;
+  vertical-align: middle;
+}
+/* Confirmation Toast Styles */
+.confirmation-toast {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  border: 1px solid #e5e7eb;
+  padding: 20px;
+  min-width: 400px;
+  max-width: 500px;
+  transition: all 0.3s ease;
+}
+
+.confirmation-toast.animate-enter {
+  animation: slideIn 0.3s ease-out;
+}
+
+.confirmation-toast.animate-leave {
+  animation: slideOut 0.3s ease-in;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
   }
-  
-  .users-table h2 {
-    font-size: 1.8rem;
-    margin-bottom: 1.5rem;
-    color: #2c3e50;
-    font-weight: 600;
-    border-bottom: 2px solid #eee;
-    padding-bottom: 0.5rem;
+  to {
+    transform: translateY(0);
+    opacity: 1;
   }
-  
-  /* Table Styles */
-  .users-table table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 1rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    background-color: white;
-    border-radius: 8px;
-    overflow: hidden;
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateY(0);
+    opacity: 1;
   }
-  
-  .users-table thead {
-    background-color: #3498db;
-    color: white;
+  to {
+    transform: translateY(-20px);
+    opacity: 0;
   }
-  
-  .users-table th {
-    padding: 1rem;
-    text-align: left;
-    font-weight: 600;
-    text-transform: uppercase;
-    font-size: 0.85rem;
-    letter-spacing: 0.5px;
-  }
-  
-  .users-table td {
-    padding: 1rem;
-    border-bottom: 1px solid #ecf0f1;
-    vertical-align: middle;
-  }
-  
-  .users-table tr:last-child td {
-    border-bottom: none;
-  }
-  
-  .users-table tr:hover {
-    background-color: #f8f9fa;
-  }
-  
-  /* Avatar Styles */
-  .user-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #eee;
-  }
-  
-  .avatar-placeholder {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: #3498db;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    font-size: 1.2rem;
-  }
-  
-  /* Role Badge & Select */
-  .role-badge {
-    padding: 0.35rem 0.75rem;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    text-transform: capitalize;
-  }
-  
-  .role-badge.student {
-    background-color: #e3f2fd;
-    color: #1976d2;
-  }
-  
-  .role-badge.admin {
-    background-color: #e8f5e9;
-    color: #388e3c;
-  }
-  
-  .role-select {
-    padding: 0.35rem 0.5rem;
-    border-radius: 4px;
-    border: 1px solid #ddd;
-    font-size: 0.9rem;
-    background-color: white;
-    cursor: pointer;
-    min-width: 100px;
-  }
-  
-  .role-select:focus {
-    outline: none;
-    border-color: #3498db;
-    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
-  }
-  
-  /* Button Styles */
-  .btn-edit,
-  .btn-delete {
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 4px;
-    font-size: 0.85rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    margin-right: 0.5rem;
-  }
-  
-  .btn-edit {
-    background-color: #f39c12;
-    color: white;
-  }
-  
-  .btn-edit:hover {
-    background-color: #e67e22;
-  }
-  
-  .btn-delete {
-    background-color: #e74c3c;
-    color: white;
-  }
-  
-  .btn-delete:hover {
-    background-color: #c0392b;
-  }
-  
-  /* Loading and Error States */
-  .users-table .loading,
-  .users-table .error {
-    text-align: center;
-    padding: 2rem;
-    font-size: 1.1rem;
-  }
-  
-  .users-table .error {
-    color: #e74c3c;
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .users-table {
-      padding: 1rem;
-    }
-    
-    .users-table table {
-      display: block;
-      overflow-x: auto;
-      white-space: nowrap;
-    }
-    
-    .users-table th,
-    .users-table td {
-      padding: 0.75rem 0.5rem;
-    }
-    
-    .btn-edit,
-    .btn-delete {
-      padding: 0.4rem 0.8rem;
-      font-size: 0.8rem;
-      margin-right: 0.3rem;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .users-table h2 {
-      font-size: 1.5rem;
-    }
-    
-    .role-select {
-      min-width: 80px;
-      padding: 0.25rem;
-    }
-    
-    .btn-edit,
-    .btn-delete {
-      display: block;
-      width: 100%;
-      margin-bottom: 0.5rem;
-    }
-  }
+}
+
+.confirmation-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.confirmation-icon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  background: #fef3c7;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.confirmation-text h4 {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.confirmation-text p {
+  margin: 0;
+  font-size: 14px;
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+.confirmation-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.confirmation-btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid;
+  min-width: 80px;
+}
+
+.confirmation-btn-cancel {
+  background: white;
+  color: #6b7280;
+  border-color: #d1d5db;
+}
+
+.confirmation-btn-cancel:hover {
+  background: #f9fafb;
+  border-color: #9ca3af;
+}
+
+.confirmation-btn-confirm {
+  background: #dc2626;
+  color: white;
+  border-color: #dc2626;
+}
+
+.confirmation-btn-confirm:hover {
+  background: #b91c1c;
+  border-color: #b91c1c;
+}
+
+.confirmation-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Table Header */
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.table-header h2 {
+  margin: 0;
+  color: #111827;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.table-stats {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.stat-item {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.stat-item strong {
+  color: #111827;
+  font-weight: 600;
+}

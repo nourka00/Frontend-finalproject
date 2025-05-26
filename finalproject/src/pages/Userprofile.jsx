@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect, useRef } from "react";
 import { AuthContext } from "../context/AuthProvider";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import "../style/userprof.css";
 
@@ -80,7 +80,10 @@ function UserProfile() {
 
   return (
     <div className="profile-container">
-      <h2 className="profile-heading">User Profile</h2>
+      <div className="profile-heading">
+       <h3>User Profile</h3><h5><Link to="/" >
+        Home
+      </Link></h5></div>
 
       <div className="profile-section">
         <input

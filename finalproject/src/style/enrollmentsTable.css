@@ -1,23 +1,18 @@
-/* enrollments-table.css - Styles for Enrollments Management */
-
-/* Base Container */
 .enrollments-table {
     max-width: 1200px;
     margin: 0 auto;
     padding: 2rem;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family:  Arial, sans-serif;
     color: #333;
   }
-  
-  .enrollments-table h2 {
+
+   .enrollments-table h2 {
     font-size: 1.8rem;
     margin-bottom: 1.5rem;
-    color: #2c3e50;
     font-weight: 600;
-    border-bottom: 2px solid #eee;
     padding-bottom: 0.5rem;
-  }
-  
+  }  
+
   /* Table Styles */
   .enrollments-table table {
     width: 100%;
@@ -30,16 +25,16 @@
   }
   
   .enrollments-table thead {
-    background-color: #3498db;
+    background-color: #000000;
     color: white;
   }
   
   .enrollments-table th {
     padding: 1rem;
     text-align: left;
-    font-weight: 600;
+    font-weight: bold;
     text-transform: uppercase;
-    font-size: 0.85rem;
+    font-size: 0.895rem;
     letter-spacing: 0.5px;
   }
   
@@ -53,9 +48,7 @@
     border-bottom: none;
   }
   
-  .enrollments-table tr:hover {
-    background-color: #f8f9fa;
-  }
+
   
   /* Status Select Dropdown */
   .status-select {

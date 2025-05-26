@@ -1,120 +1,82 @@
-// OrdersTable.jsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
-import "../style/ordersTable.css"; // Assuming you have a CSS file for styling
+import "../style/ordersTable.css";
+
 const baseURL = "https://myguide.onrender.com/api";
 const token = localStorage.getItem("token");
-
-const Modal = ({ title, children, onClose }) => (
-  <div className="modal-overlay">
-    <div className="modal">
-      <div className="modal-header">
-        <h3>{title}</h3>
-        <button className="modal-close" onClick={onClose}>
-          ×
-        </button>
-      </div>
-      <div className="modal-body">{children}</div>
-      <div className="modal-footer">
-        <button className="btn-close" onClick={onClose}>
-          Close
-        </button>
-      </div>
-    </div>
-  </div>
-);
-
-const OrderDetailsModal = ({ order, onClose }) => (
-  <Modal title="Order Details" onClose={onClose}>
-    {["transaction_id", "payment_method", "status"].map((key) => (
-      <div key={key} className="detail-row">
-        <span className="detail-label">{key.replace(/_/g, " ")}:</span>
-        <span>{order[key]}</span>
-      </div>
-    ))}
-    <div className="detail-row">
-      <span className="detail-label">User:</span>
-      <span>{order.User?.name || "N/A"}</span>
-    </div>
-    <div className="detail-row">
-      <span className="detail-label">Course:</span>
-      <span>{order.Course?.title || "N/A"}</span>
-    </div>
-    <div className="detail-row">
-      <span className="detail-label">Date:</span>
-      <span>{new Date(order.purchase_date).toLocaleDateString()}</span>
-    </div>
-    <div className="detail-row">
-      <span className="detail-label">Amount:</span>
-      <span>${order.Course?.price || "0.00"}</span>
-    </div>
-    {order.proof_of_payment && (
-      <div className="detail-row">
-        <span className="detail-label">Proof of Payment:</span>
-        <a
-          href={order.proof_of_payment}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          View Document
-        </a>
-      </div>
-    )}
-  </Modal>
-);
-
-const StatusUpdateModal = ({ currentStatus, onUpdate, onClose }) => {
-  const [selectedStatus, setSelectedStatus] = useState(currentStatus);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onUpdate(selectedStatus);
-  };
-
-  return (
-    <Modal title="Update Order Status" onClose={onClose}>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>Select Status:</label>
-          <select
-            value={selectedStatus}
-            onChange={(e) => setSelectedStatus(e.target.value)}
-            className="status-select"
-          >
-            {["pending", "completed", "failed"].map((status) => (
-              <option key={status} value={status}>
-                {status}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="modal-footer">
-          <button type="button" className="btn-cancel" onClick={onClose}>
-            Cancel
-          </button>
-          <button type="submit" className="btn-save">
-            Update Status
-          </button>
-        </div>
-      </form>
-    </Modal>
-  );
-};
 
 const OrdersTable = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedOrder, setSelectedOrder] = useState(null);
-  const [showDetailsModal, setShowDetailsModal] = useState(false);
-  const [showStatusModal, setShowStatusModal] = useState(false);
+  const [showDetails, setShowDetails] = useState(false);
+
+  const showConfirmationToast = (message, onConfirm, onCancel = () => {}) => {
+    toast.custom(
+      (t) => (
+        <div
+          className={`confirmation-toast ${
+            t.visible ? "animate-enter" : "animate-leave"
+          }`}
+        >
+          <div className="confirmation-content">
+            <div className="confirmation-icon">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 9V13M12 17H12.01M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
+                  stroke="#f59e0b"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </div>
+            <div className="confirmation-text">
+              <h4>Confirm Action</h4>
+              <p>{message}</p>
+            </div>
+          </div>
+          <div className="confirmation-actions">
+            <button
+              className="confirmation-btn confirmation-btn-cancel"
+              onClick={() => {
+                toast.dismiss(t.id);
+                onCancel();
+              }}
+            >
+              Cancel
+            </button>
+            <button
+              className="confirmation-btn confirmation-btn-confirm"
+              onClick={() => {
+                toast.dismiss(t.id);
+                onConfirm();
+              }}
+            >
+              Confirm
+            </button>
+          </div>
+        </div>
+      ),
+      {
+        duration: Number.POSITIVE_INFINITY,
+        position: "top-center",
+      }
+    );
+  };
 
   useEffect(() => {
-    (async () => {
+    const fetchOrders = async () => {
       try {
         const { data } = await axios.get(`${baseURL}/purchases/orders`, {
-          withCredentials: true,
           headers: { Authorization: `Bearer ${token}` },
         });
         setOrders(data);
@@ -123,139 +85,240 @@ const OrdersTable = () => {
       } finally {
         setLoading(false);
       }
-    })();
+    };
+    fetchOrders();
   }, []);
 
-  // Update the handleStatusUpdate function in OrdersTable.jsx
-  const handleStatusUpdate = async (newStatus) => {
-    try {
-      const { data: updatedOrder } = await axios.patch(
-        `${baseURL}/purchases/${selectedOrder.id}/status`,
-        { status: newStatus },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+  const handleStatusUpdate = async (orderId, newStatus) => {
+    const order = orders.find((o) => o.id === orderId);
+    const orderInfo = order ? `Order #${order.transaction_id}` : "this order";
 
-      setOrders((prev) =>
-        prev.map((o) => (o.id === updatedOrder.id ? updatedOrder : o))
-      );
-      setShowStatusModal(false);
-      toast.success("Order status updated successfully");
-    } catch (err) {
-      toast.error("Failed to update order status");
-      console.error(err);
-    }
+    showConfirmationToast(
+      `Are you sure you want to change the status of ${orderInfo} to "${newStatus}"?`,
+      async () => {
+        try {
+          const { data: updatedOrder } = await axios.patch(
+            `${baseURL}/purchases/${orderId}/status`,
+            { status: newStatus },
+            { headers: { Authorization: `Bearer ${token}` } }
+          );
+          setOrders((prev) =>
+            prev.map((o) => (o.id === updatedOrder.id ? updatedOrder : o))
+          );
+          toast.success("Order status updated successfully");
+        } catch (err) {
+          toast.error("Failed to update order status");
+          console.error(err);
+        }
+      }
+    );
   };
+
   const handleDeleteOrder = async (orderId) => {
-    try {
-      await axios.delete(`${baseURL}/purchases/${orderId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setOrders(orders.filter((order) => order.id !== orderId));
-      toast.success("Order deleted successfully");
-    } catch (err) {
-      toast.error("Failed to delete order");
-      console.error(err);
-    }
+    const order = orders.find((o) => o.id === orderId);
+    const orderInfo = order ? `Order #${order.transaction_id}` : "this order";
+
+    showConfirmationToast(
+      `Are you sure you want to delete ${orderInfo}? This action cannot be undone.`,
+      async () => {
+        try {
+          await axios.delete(`${baseURL}/purchases/${orderId}`, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          setOrders(orders.filter((order) => order.id !== orderId));
+          toast.success("Order deleted successfully");
+        } catch (err) {
+          toast.error("Failed to delete order");
+          console.error(err);
+        }
+      }
+    );
   };
-  if (loading) return <div>Loading orders...</div>;
-  if (error) return <div>Error: {error}</div>;
+
+  if (loading) return <div className="loading">Loading orders...</div>;
+  if (error) return <div className="error">Error: {error}</div>;
 
   return (
     <div className="orders-table">
-      <h2>Orders Management</h2>
-      <table>
-        <thead>
-          <tr>
-            {[
-              "Order ID",
-              "User",
-              "Course",
-              "Date",
-              "Payment Method",
-              "Status",
-              "Amount",
-              "Actions",
-            ].map((h) => (
-              <th key={h}>{h}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {orders.map((order) => (
-            <tr key={order.id}>
-              <td>{order.transaction_id}</td>
-              <td>{order.User?.name || "N/A"}</td>
-              <td>{order.Course?.title || "N/A"}</td>
-              <td>{new Date(order.purchase_date).toLocaleDateString()}</td>
-              <td>
-                <span className={`payment-method ${order.payment_method}`}>
-                  {order.payment_method}
+      <div className="table-header">
+        <h2>Orders Management</h2>
+        <div className="table-stats">
+          <span className="stat-item">
+            Total Orders: <strong>{orders.length}</strong>
+          </span>
+          <span className="stat-item">
+            Completed:{" "}
+            <strong>
+              {orders.filter((o) => o.status === "completed").length}
+            </strong>
+          </span>
+          <span className="stat-item">
+            Pending:{" "}
+            <strong>
+              {orders.filter((o) => o.status === "pending").length}
+            </strong>
+          </span>
+        </div>
+      </div>
+
+      {showDetails && selectedOrder && (
+        <div className="modal-overlay">
+          <div className="modal">
+            <div className="modal-header">
+              <h3>Order Details</h3>
+              <button
+                className="modal-close"
+                onClick={() => setShowDetails(false)}
+              >
+                ×
+              </button>
+            </div>
+            <div className="modal-body">
+              <div className="detail-row">
+                <span className="detail-label">Transaction ID:</span>
+                <span>{selectedOrder.transaction_id}</span>
+              </div>
+              <div className="detail-row">
+                <span className="detail-label">User:</span>
+                <span>{selectedOrder.User?.name || "N/A"}</span>
+              </div>
+              <div className="detail-row">
+                <span className="detail-label">Course:</span>
+                <span>{selectedOrder.Course?.title || "N/A"}</span>
+              </div>
+              <div className="detail-row">
+                <span className="detail-label">Date:</span>
+                <span>
+                  {new Date(selectedOrder.purchase_date).toLocaleDateString()}
                 </span>
-              </td>
-              <td>
-                <span className={`status-badge ${order.status}`}>
-                  {order.status}
+              </div>
+              <div className="detail-row">
+                <span className="detail-label">Payment Method:</span>
+                <span>{selectedOrder.payment_method}</span>
+              </div>
+              <div className="detail-row">
+                <span className="detail-label">Status:</span>
+                <span className={`status-badge ${selectedOrder.status}`}>
+                  {selectedOrder.status}
                 </span>
-              </td>
-              <td>${order.Course?.price || "0.00"}</td>
-              <td>
-                <button
-                  className="btn-view"
-                  onClick={() => {
-                    setSelectedOrder(order);
-                    setShowDetailsModal(true);
-                  }}
-                >
-                  View
-                </button>
-                <button
-                  className="btn-update"
-                  onClick={() => {
-                    setSelectedOrder(order);
-                    setShowStatusModal(true);
-                  }}
-                >
-                  Update Status
-                </button>
-                <button
-                  className="btn-delete"
-                  onClick={() => {
-                    if (
-                      window.confirm(
-                        "Are you sure you want to delete this order?"
-                      )
-                    ) {
-                      handleDeleteOrder(order.id);
-                    }
-                  }}
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      {showDetailsModal && selectedOrder && (
-        <OrderDetailsModal
-          order={selectedOrder}
-          onClose={() => setShowDetailsModal(false)}
-        />
+              </div>
+              <div className="detail-row">
+                <span className="detail-label">Amount:</span>
+                <span>${selectedOrder.Course?.price || "0.00"}</span>
+              </div>
+              {selectedOrder.proof_of_payment && (
+                <div className="detail-row">
+                  <span className="detail-label">Proof of Payment:</span>
+                  <a
+                    href={selectedOrder.proof_of_payment}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    View Document
+                  </a>
+                </div>
+              )}
+            </div>
+            <div className="modal-footer">
+              <button
+                className="btn-close"
+                onClick={() => setShowDetails(false)}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
       )}
-      {showStatusModal && selectedOrder && (
-        <StatusUpdateModal
-          currentStatus={selectedOrder.status}
-          onUpdate={handleStatusUpdate}
-          onClose={() => setShowStatusModal(false)}
-        />
-      )}
+
+      <div className="table-container">
+        {orders.length > 0 ? (
+          <table>
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>User</th>
+                <th>Course</th>
+                <th>Date</th>
+                <th>Payment</th>
+                <th>Status</th>
+                <th>Amount</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {orders.map((order) => (
+                <tr key={order.id}>
+                  <td>#{order.transaction_id}</td>
+                  <td>{order.User?.name || "N/A"}</td>
+                  <td>{order.Course?.title || "N/A"}</td>
+                  <td>{new Date(order.purchase_date).toLocaleDateString()}</td>
+                  <td>
+                    <span className={`payment-method ${order.payment_method}`}>
+                      {order.payment_method}
+                    </span>
+                  </td>
+                  <td>
+                    <select
+                      value={order.status}
+                      onChange={(e) =>
+                        handleStatusUpdate(order.id, e.target.value)
+                      }
+                      className={`status-select ${order.status}`}
+                    >
+                      <option value="pending">Pending</option>
+                      <option value="completed">Completed</option>
+                      <option value="failed">Failed</option>
+                    </select>
+                  </td>
+                  <td>${order.Course?.price || "0.00"}</td>
+                  <td>
+                    <button
+                      className="btn-view"
+                      onClick={() => {
+                        setSelectedOrder(order);
+                        setShowDetails(true);
+                      }}
+                    >
+                      View
+                    </button>
+                    <button
+                      className="btn-delete"
+                      onClick={() => handleDeleteOrder(order.id)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <div className="empty-state">
+            <div className="empty-icon">
+              <svg
+                width="48"
+                height="48"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
+                  stroke="#9ca3af"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </div>
+            <h3>No orders found</h3>
+            <p>There are currently no orders to display.</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
 
 export default OrdersTable;
-

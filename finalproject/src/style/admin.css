@@ -1,387 +1,80 @@
-/* src/styles/admin.css */
 .admin-dashboard {
-    padding: 20px;
-    font-family: Arial, sans-serif;
-  }
-  
-  .admin-header {
-    margin-bottom: 30px;
-  }
-  
-  .admin-nav {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #eee;
-  }
-   
-  .admin-nav button {
-    padding: 8px 16px;
-    background: #f0f0f0;
-    color: #1c0d0d;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .admin-nav button.active {
-    background: #ff0000;
-    color: white;
-  }
-  
-  /* Tables */
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
-  
-  th, td {
-    padding: 12px 15px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  th {
-    background-color: #f8f9fa;
-    font-weight: 600;
-  }
-  
-  tr:hover {
-    background-color: #f5f5f5;
-  }
-  
-  /* Buttons */
-  .btn-edit, .btn-view, .btn-save, .btn-add-course {
-    background-color: #1c0d0d;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-right: 5px;
-  }
-  .btn-add-course{ color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-right: 5px;
-    background-color: #cd6767;}
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f8f8f8;
+  min-height: 100vh;
+  padding: 0;
+  margin: 0;
+  color: #000000;
+}
 
-  .btn-delete {
-    background-color: #dc3545;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .btn-cancel {
-    background-color: #6c757d;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-left: 10px;
-  }
-  
-  .btn-add-course {
-    margin-bottom: 20px;
-  }
-  
-  /* Status badges */
-  .status-badge {
-    padding: 4px 8px;
-    border-radius: 12px;
-    font-size: 12px;
-    font-weight: 600;
-  }
-  
-  .status-badge.pending {
-    background-color: #ffc107;
-    color: #212529;
-  }
-  
-  .status-badge.completed {
-    background-color: #28a745;
-    color: white;
-  }
-  
-  .status-badge.failed {
-    background-color: #dc3545;
-    color: white;
-  }
-  
-  /* Role badges */
-  .role-badge {
-    padding: 4px 8px;
-    border-radius: 12px;
-    font-size: 12px;
-    font-weight: 600;
-  }
-  
-  .role-badge.student {
-    background-color: #17a2b8;
-    color: white;
-  }
-  
-  .role-badge.admin {
-    background-color: #713cd3;
-    color: white;
-  }
-  
-  /* Images and avatars */
-  .user-avatar, .course-thumbnail {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-  }
-  
-  .avatar-placeholder {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: #6c757d;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-  }
-  
-  .thumbnail-placeholder {
-    width: 60px;
-    height: 40px;
-    background-color: #f8f9fa;
-    border: 1px dashed #dee2e6;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 10px;
-    color: #6c757d;
-  }
-  
-  /* Progress bar */
-  .progress-bar {
-    width: 100px;
-    height: 20px;
-    background-color: #e9ecef;
-    border-radius: 10px;
-    overflow: hidden;
-    position: relative;
-  }
-  
-  .progress-fill {
-    height: 100%;
-    background-color: #17a2b8;
-    transition: width 0.3s ease;
-  }
-  
-  .progress-bar span {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 10px;
-    color: white;
-    text-shadow: 0 0 2px rgba(0,0,0,0.5);
-  }
-  
-  /* Course form */
-  .course-form {
-    background-color: #f8f9fa;
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-  }
-  
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  .form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: 600;
-  }
-  
-  .form-group input[type="text"],
-  .form-group input[type="number"],
-  .form-group select,
-  .form-group textarea {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ced4da;
-    border-radius: 4px;
-  }
-  
-  .form-group textarea {
-    min-height: 100px;
-  }
-  
-  .form-actions {
-    margin-top: 20px;
-  }
-  
-  .description-cell {
-    max-width: 200px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  /* Modal Styles */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
-  
-  .modal {
-    background: white;
-    border-radius: 8px;
-    width: 90%;
-    max-width: 600px;
-    max-height: 90vh;
-    overflow-y: auto;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  }
-  
-  .modal-header {
-    padding: 20px;
-    border-bottom: 1px solid #eee;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .modal-header h3 {
-    margin: 0;
-  }
-  
-  .modal-close {
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    color: #666;
-  }
-  
-  .modal-body {
-    padding: 20px;
-  }
-  
-  .modal-footer {
-    padding: 15px 20px;
-    border-top: 1px solid #eee;
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-  }
-  
-  .btn-close {
-    background-color: #6c757d;
-    color: white;
-  }
-  
-  /* Detail View Styles */
-  .detail-row {
-    display: flex;
-    margin-bottom: 15px;
-  }
-  
-  .detail-label {
-    font-weight: bold;
-    width: 150px;
-    color: #555;
-  }
-  
-  /* Status Select */
-  .status-select {
-    padding: 8px;
-    border-radius: 4px;
-    border: 1px solid #ced4da;
-    width: 100%;
-  }
-  /* Add to your admin.css */
-.role-select {
-    padding: 5px;
-    border-radius: 4px;
-    border: 1px solid #ddd;
-  }
-  
-  .status-select {
-    padding: 5px;
-    border-radius: 4px;
-    border: 1px solid #ddd;
-    background-color: #f5f5f5;
-  }
-  
-  .status-select.pending {
-    background-color: #fff3cd;
-  }
-  
-  .status-select.completed {
-    background-color: #d4edda;
-  }
-  
-  .status-select.failed {
-    background-color: #f8d7da;
-  }
-  
-  .modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
-  
-  .modal-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    max-width: 500px;
-    width: 100%;
-  }
-  
-  .btn-save {
-    background-color: #28a745;
-    color: white;
-  }
-  
-  .btn-cancel {
-    background-color: #6c757d;
-    color: white;
-  }
-  
-  .btn-delete {
-    background-color: #dc3545;
-    color: white;
-  }
-  
-  .btn-edit {
-    background-color: #17a2b8;
-    color: white;
-  }
-  
-  .btn-view {
-    background-color: #6c757d;
-    color: white;
-  }
+/* Header Section */
+.admin-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #ffffff;
+  padding: 15px 30px;
+  border-bottom: 3px solid #d10000;
+}
+
+.admin-header h4 a {
+  text-decoration: none;
+  color: #ffffff;
+  background-color: #d10000;
+  padding: 8px 15px;
+  border-radius: 5px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.admin-header h4 a:hover {
+  background-color: #ff1a1a;
+}
+
+.admin-header h1 {
+  font-size: 24px;
+  color: #000000;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Navigation Tabs */
+.admin-nav {
+  display: flex;
+  background-color: #480303ea;
+  padding-left: 30px;
+  border-bottom: 2px solid #d10000;
+}
+
+.admin-nav button {
+  background: none;
+  border: none;
+  color: #ccc;
+  padding: 14px 20px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-bottom: 3px solid transparent;
+}
+
+.admin-nav button:hover {
+  background-color: #444;
+  color: #fff;
+}
+
+.admin-nav .active {
+  border-bottom: 3px solid #d10000;
+  color: #ffffff;
+  background-color: #1a1a1a;
+}
+
+/* Admin Content */
+.admin-content {
+  background-color: #ffffff;
+  margin: 20px 30px;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(147, 22, 22, 0);
+  color: #222;
+}

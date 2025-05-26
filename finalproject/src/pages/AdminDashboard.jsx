@@ -1,5 +1,6 @@
 // src/components/admin/AdminDashboard.jsx
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import UsersTable from "../components/UsersTable";
 import OrdersTable from "../components/OrdersTable";
 import EnrollmentsTable from "../components/EnrollmentsTable";
@@ -9,10 +10,13 @@ const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState("users");
 
   return (
+    <>
+     
     <div className="admin-dashboard">
-      <div className="admin-header">
-        <h1>Admin Dashboard</h1>
-      </div>
+        <div className="admin-header">
+          <h4><Link to="/">Home</Link></h4>
+          <h1>Admin Dashboard</h1>
+        </div>
 
       <nav className="admin-nav">
         <button
@@ -47,7 +51,7 @@ const AdminDashboard = () => {
         {activeTab === "enrollments" && <EnrollmentsTable />}
         {activeTab === "courses" && <CoursesManager />}
       </div>
-    </div>
+    </div></>
   );
 };
 

@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import CourseForm from "../components/CourseForm";
 import CourseTable from "../components/CourseTable";
 import CourseMaterialForm from "../components/CourseMaterialForm";
-import "../style/AdminCourses.css"; // Assuming you have a CSS file for styling
+import "../style/AdminCourses.css";
+
 const CoursesManager = () => {
   const navigate = useNavigate();
   const [courses, setCourses] = useState([]);
@@ -35,6 +36,67 @@ const CoursesManager = () => {
   });
 
   const baseURL = "https://myguide.onrender.com/api";
+
+  // Custom confirmation toast component
+  const showConfirmationToast = (message, onConfirm, onCancel = () => {}) => {
+    toast.custom(
+      (t) => (
+        <div
+          className={`confirmation-toast ${
+            t.visible ? "animate-enter" : "animate-leave"
+          }`}
+        >
+          <div className="confirmation-content">
+            <div className="confirmation-icon">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 9V13M12 17H12.01M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
+                  stroke="#f59e0b"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </div>
+            <div className="confirmation-text">
+              <h4>Confirm Action</h4>
+              <p>{message}</p>
+            </div>
+          </div>
+          <div className="confirmation-actions">
+            <button
+              className="confirmation-btn confirmation-btn-cancel"
+              onClick={() => {
+                toast.dismiss(t.id);
+                onCancel();
+              }}
+            >
+              Cancel
+            </button>
+            <button
+              className="confirmation-btn confirmation-btn-confirm"
+              onClick={() => {
+                toast.dismiss(t.id);
+                onConfirm();
+              }}
+            >
+              Confirm
+            </button>
+          </div>
+        </div>
+      ),
+      {
+        duration: Number.POSITIVE_INFINITY,
+        position: "top-center",
+      }
+    );
+  };
 
   const getAuthHeaders = () => {
     const token = localStorage.getItem("token");
@@ -143,19 +205,25 @@ const CoursesManager = () => {
   };
 
   const handleDeleteCourse = async (id) => {
-    if (window.confirm("Are you sure you want to delete this course?")) {
-      try {
-        const headers = getAuthHeaders();
-        if (!headers) return;
+    const course = courses.find((c) => c.id === id);
+    const courseName = course ? course.title : "this course";
 
-        await axios.delete(`${baseURL}/courses/${id}`, headers);
-        setCourses(courses.filter((c) => c.id !== id));
-        toast.success("Course deleted successfully");
-      } catch (err) {
-        console.error("Delete course error:", err);
-        toast.error(err.response?.data?.message || "Failed to delete course");
+    showConfirmationToast(
+      `Are you sure you want to delete "${courseName}"? This action cannot be undone.`,
+      async () => {
+        try {
+          const headers = getAuthHeaders();
+          if (!headers) return;
+
+          await axios.delete(`${baseURL}/courses/${id}`, headers);
+          setCourses(courses.filter((c) => c.id !== id));
+          toast.success("Course deleted successfully");
+        } catch (err) {
+          console.error("Delete course error:", err);
+          toast.error(err.response?.data?.message || "Failed to delete course");
+        }
       }
-    }
+    );
   };
 
   const handleMaterialUpload = async () => {
@@ -220,33 +288,37 @@ const CoursesManager = () => {
       return;
     }
 
-    if (!window.confirm("Are you sure you want to delete this material?")) {
-      return;
-    }
+    const material = materials.find((m) => m.id === id);
+    const materialName = material ? material.title : "this material";
 
-    try {
-      setDeleting(true);
-      const headers = getAuthHeaders();
-      if (!headers) return;
+    showConfirmationToast(
+      `Are you sure you want to delete "${materialName}"? This action cannot be undone.`,
+      async () => {
+        try {
+          setDeleting(true);
+          const headers = getAuthHeaders();
+          if (!headers) return;
 
-      const response = await axios.delete(`${baseURL}/${id}`, headers);
+          const response = await axios.delete(`${baseURL}/${id}`, headers);
 
-      if (response.data.message === "File deleted successfully") {
-        setMaterials(materials.filter((m) => m.id !== id));
-        toast.success("Material deleted successfully");
-      } else {
-        toast.error(response.data.message || "Deletion failed");
+          if (response.data.message === "File deleted successfully") {
+            setMaterials(materials.filter((m) => m.id !== id));
+            toast.success("Material deleted successfully");
+          } else {
+            toast.error(response.data.message || "Deletion failed");
+          }
+        } catch (err) {
+          console.error("Delete error:", err);
+          const errorMessage =
+            err.response?.data?.message ||
+            err.response?.data?.error ||
+            "Failed to delete material";
+          toast.error(errorMessage);
+        } finally {
+          setDeleting(false);
+        }
       }
-    } catch (err) {
-      console.error("Delete error:", err);
-      const errorMessage =
-        err.response?.data?.message ||
-        err.response?.data?.error ||
-        "Failed to delete material";
-      toast.error(errorMessage);
-    } finally {
-      setDeleting(false);
-    }
+    );
   };
 
   const handleInputChange = (e) => {

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
-import "../style/enrollmentsTable.css"; // Assuming you have a CSS file for styling
+import "../style/enrollmentsTable.css";
+
 const EnrollmentsTable = () => {
   const [enrollments, setEnrollments] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -11,40 +12,24 @@ const EnrollmentsTable = () => {
   const baseURL = "https://myguide.onrender.com/api";
   const token = localStorage.getItem("token");
 
-  const fetchEnrollments = async () => {
+  const fetchCompletedEnrollments = async () => {
     try {
-      const response = await axios.get(`${baseURL}/purchases/enrollments`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await axios.get(
+        `${baseURL}/purchases/enrollments?status=completed`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       return response.data;
     } catch (err) {
       throw err;
     }
   };
 
-  const updateEnrollmentStatus = async (enrollmentId, newStatus) => {
-    try {
-      const response = await axios.patch(
-        `${baseURL}/purchases/${enrollmentId}/status`,
-        { status: newStatus },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      toast.success("Enrollment status updated");
-      setEnrollments(
-        enrollments.map((e) =>
-          e.id === enrollmentId ? { ...e, status: newStatus } : e
-        )
-      );
-    } catch (err) {
-      toast.error("Failed to update enrollment");
-      console.error(err);
-    }
-  };
-
   useEffect(() => {
     const loadEnrollments = async () => {
       try {
-        const data = await fetchEnrollments();
+        const data = await fetchCompletedEnrollments();
         setEnrollments(data);
       } catch (err) {
         setError(err.message);
@@ -60,7 +45,7 @@ const EnrollmentsTable = () => {
 
   return (
     <div className="enrollments-table">
-      <h2>Enrollments Management</h2>
+      <h2>Completed Enrollments</h2>
 
       {showDetails && selectedEnrollment && (
         <div className="modal">
@@ -73,11 +58,11 @@ const EnrollmentsTable = () => {
               <strong>Course:</strong> {selectedEnrollment.Course?.title}
             </p>
             <p>
-              <strong>Date:</strong>{" "}
+              <strong>Date:</strong>
               {new Date(selectedEnrollment.purchase_date).toLocaleDateString()}
             </p>
             <p>
-              <strong>Payment Method:</strong>{" "}
+              <strong>Payment Method:</strong>
               {selectedEnrollment.payment_method}
             </p>
             <p>
@@ -106,7 +91,6 @@ const EnrollmentsTable = () => {
             <th>User</th>
             <th>Course</th>
             <th>Enrollment Date</th>
-            <th>Status</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -116,20 +100,6 @@ const EnrollmentsTable = () => {
               <td>{enrollment.User?.name || "N/A"}</td>
               <td>{enrollment.Course?.title || "N/A"}</td>
               <td>{new Date(enrollment.purchase_date).toLocaleDateString()}</td>
-              <td>
-                <select
-                  value={enrollment.status}
-                  onChange={(e) =>
-                    updateEnrollmentStatus(enrollment.id, e.target.value)
-                  }
-                  className={`status-select ${enrollment.status}`}
-                >
-                  <option value="pending">Pending</option>
-                  <option value="completed">Completed</option>
-                  <option value="failed">Failed</option>
-                </select>
-              </td>
-            
               <td>
                 <button
                   className="btn-view"
