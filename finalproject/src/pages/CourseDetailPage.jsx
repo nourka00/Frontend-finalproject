@@ -6,7 +6,7 @@ import "../style/CourseDetailPage.css";
 import Navbar from "../components/header";
 import Footer from "../components/Footer";
 import toast from "react-hot-toast";
-import RelatedCourseCard from "../components/RelatedCourseCard";
+
 const CourseDetailPage = () => {
   const { id } = useParams();
   const [course, setCourse] = useState(null);
