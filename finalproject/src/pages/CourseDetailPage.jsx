@@ -6,7 +6,7 @@ import "../style/CourseDetailPage.css";
 import Navbar from "../components/header";
 import Footer from "../components/Footer";
 import toast from "react-hot-toast";
-
+import RelatedCourseCard from "../components/RelatedCourseCard";
 const CourseDetailPage = () => {
   const { id } = useParams();
   const [course, setCourse] = useState(null);
@@ -18,7 +18,7 @@ const CourseDetailPage = () => {
   const [paymentMethod, setPaymentMethod] = useState("credit_card");
   const [transactionId, setTransactionId] = useState("");
   const [proofOfPayment, setProofOfPayment] = useState(null);
-  
+  const [relatedCourses, setRelatedCourses] = useState([]);
   useEffect(() => {
     const fetchCourseData = async () => {
       try {
@@ -37,6 +37,12 @@ const CourseDetailPage = () => {
         );
         const reviewsData = await reviewsRes.json();
         setReviews(reviewsData);
+        //fetch related course 
+        const relatedRes = await fetch(
+          `http://localhost:3000/api/courses/${id}/related`
+        );
+        const relatedData = await relatedRes.json();
+        setRelatedCourses(relatedData);
 
         // Check enrollment
         const token = localStorage.getItem("token");
@@ -137,120 +143,148 @@ const CourseDetailPage = () => {
   if (!course) return <div className="not-found">Course not found</div>;
 
   return (
-    <><Navbar />
-    <div className="course-detail-container">
-      <div className="course-header">
-        <div className="course-image-container">
-          <img
-            src={
-              course.image ||
-              "https://via.placeholder.com/800x400?text=Course+Image"
-            }
-            alt={course.title}
-            className="course-main-image"
-          />
-        </div>
-
-        <div className="course-info">
-          <h1>{course.title}</h1>
-
-          <div className="course-meta">
-            <span className={`level-badge ${course.level.toLowerCase()}`}>
-              {course.level}
-            </span>
-            <span className="schedule">{course.schedule}</span>
-            <span className="price">${course.price}</span>
+    <>
+      <Navbar />
+      <div className="course-detail-container">
+        <div className="course-header">
+          <div className="course-image-container">
+            <img
+              src={
+                course.image ||
+                "https://via.placeholder.com/800x400?text=Course+Image"
+              }
+              alt={course.title}
+              className="course-main-image"
+            />
           </div>
 
-          <div className="course-skills">
-            <h3>Skills You'll Learn:</h3>
-            <div className="skills-list">
-              {course.skills &&
-                course.skills.map((skill, index) => (
-                  <span key={index} className="skill-tag">
-                    {skill}
-                  </span>
-                ))}
+          <div className="course-info">
+            <h1>{course.title}</h1>
+
+            <div className="course-meta">
+              <span className={`level-badge ${course.level.toLowerCase()}`}>
+                {course.level}
+              </span>
+              <span className="schedule">{course.schedule}</span>
+              <span className="price">${course.price}</span>
+            </div>
+
+            <div className="course-skills">
+              <h3>Skills You'll Learn:</h3>
+              <div className="skills-list">
+                {course.skills &&
+                  course.skills.map((skill, index) => (
+                    <span key={index} className="skill-tag">
+                      {skill}
+                    </span>
+                  ))}
+              </div>
+            </div>
+
+            <button
+              className="enroll-btn"
+              onClick={() => setShowCheckout(true)}
+            >
+              Enroll Now
+            </button>
+          </div>
+        </div>
+
+        <div className="course-content">
+          <div className="course-description">
+            <h2>About This Course</h2>
+            <p>{course.description}</p>
+          </div>
+
+          <div className="course-reviews">
+            <h2>Reviews</h2>
+
+            {reviews.length > 0 ? (
+              <ReviewList reviews={reviews} />
+            ) : (
+              <p className="no-reviews">
+                No reviews yet. Be the first to review!
+              </p>
+            )}
+
+            {/* {isEnrolled && <AddReviewForm onSubmit={handleAddReview} />} */}
+            {isEnrolled ? (
+              <AddReviewForm onSubmit={handleAddReview} />
+            ) : (
+              <p className="review-access-msg">
+                You must enroll to leave a review.
+              </p>
+            )}
+          </div>
+          <div className="related-courses-section">
+            <h2>Related Courses</h2>
+            <div className="related-courses-grid">
+              {relatedCourses.length > 0 ? (
+                relatedCourses.map((related) => (
+                  <div key={related.id} className="related-course-card">
+                    <img
+                      src={
+                        related.image ||
+                        "https://via.placeholder.com/300x200?text=Course"
+                      }
+                      alt={related.title}
+                      className="related-course-image"
+                    />
+                    <h3>{related.title}</h3>
+                    <p className="related-course-level">{related.level}</p>
+                    <p className="related-course-price">${related.price}</p>
+                  </div>
+                ))
+              ) : (
+                <p>No related courses found.</p>
+              )}
             </div>
           </div>
-
-          <button className="enroll-btn" onClick={() => setShowCheckout(true)}>
-            Enroll Now
-          </button>
         </div>
-      </div>
+        {showCheckout && (
+          <div className="popup-overlay">
+            <div className="popup-form">
+              <h2>Checkout</h2>
 
-      <div className="course-content">
-        <div className="course-description">
-          <h2>About This Course</h2>
-          <p>{course.description}</p>
-        </div>
+              <label>Payment Method</label>
+              <select
+                value={paymentMethod}
+                onChange={(e) => setPaymentMethod(e.target.value)}
+              >
+                <option value="credit_card">Credit Card</option>
+                <option value="paypal">PayPal</option>
+                <option value="bank_transfer">Bank Transfer</option>
+                <option value="OMT">OMT</option>
+                <option value="mobile_wallet">Mobile Wallet</option>
+              </select>
 
-        <div className="course-reviews">
-          <h2>Reviews</h2>
+              <label>Transaction ID</label>
+              <input
+                type="text"
+                value={transactionId}
+                onChange={(e) => setTransactionId(e.target.value)}
+                placeholder="Enter transaction ID"
+              />
 
-          {reviews.length > 0 ? (
-            <ReviewList reviews={reviews} />
-          ) : (
-            <p className="no-reviews">
-              No reviews yet. Be the first to review!
-            </p>
-          )}
+              <label>Proof of Payment (image)</label>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => setProofOfPayment(e.target.files[0])}
+              />
 
-          {/* {isEnrolled && <AddReviewForm onSubmit={handleAddReview} />} */}
-          {isEnrolled ? (
-            <AddReviewForm onSubmit={handleAddReview} />
-          ) : (
-            <p className="review-access-msg">
-              You must enroll to leave a review.
-            </p>
-          )}
-        </div>
-      </div>
-      {showCheckout && (
-        <div className="popup-overlay">
-          <div className="popup-form">
-            <h2>Checkout</h2>
-
-            <label>Payment Method</label>
-            <select
-              value={paymentMethod}
-              onChange={(e) => setPaymentMethod(e.target.value)}
-            >
-              <option value="credit_card">Credit Card</option>
-              <option value="paypal">PayPal</option>
-              <option value="bank_transfer">Bank Transfer</option>
-              <option value="OMT">OMT</option>
-              <option value="mobile_wallet">Mobile Wallet</option>
-            </select>
-
-            <label>Transaction ID</label>
-            <input
-              type="text"
-              value={transactionId}
-              onChange={(e) => setTransactionId(e.target.value)}
-              placeholder="Enter transaction ID"
-            />
-
-            <label>Proof of Payment (image)</label>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => setProofOfPayment(e.target.files[0])}
-            />
-
-            <button className="confirm-btn" onClick={handleEnroll}>
-              Confirm Enrollment
-            </button>
-            <button
-              className="cancel-btn"
-              onClick={() => setShowCheckout(false)}
-            >
-              Cancel
-            </button>
+              <button className="confirm-btn" onClick={handleEnroll}>
+                Confirm Enrollment
+              </button>
+              <button
+                className="cancel-btn"
+                onClick={() => setShowCheckout(false)}
+              >
+                Cancel
+              </button>
+            </div>
           </div>
-        </div>
-      )}
+        )}
       </div>
       <Footer />
     </>
