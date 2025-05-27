@@ -8,6 +8,9 @@ import lunet from "../assets/lunet.png";
 import mechanical from "../assets/mechdesign.png";
 import programming from "../assets/programming.png";
 import LineCo from "./LineCo";
+import mechanicalDesign from "../assets/mechanicaloptimization.jpg";
+import matlabSimulation from "../assets/electricschema.png";
+import autoCAD from "../assets/autocaddrawing.png";
 const ProfileCard = () => {
 
   return (
@@ -51,29 +54,73 @@ const ProfileCard = () => {
         <img src={imagehead} alt="Avatar" />
       </div>
 
-      <div className="projects" style={{ paddingTop: "1em"}}>
+      {/* <div className="projects" style={{ paddingTop: "1em" }}>
         <h2
           className="projects-title"
-          style={{borderBottom: "1px black solid",textAlign: "left", paddingLeft:"2em" }}
+          style={{
+            borderBottom: "1px black solid",
+            textAlign: "left",
+            paddingLeft: "2em",
+          }}
         >
           Projects
         </h2>
         <ul className="projects-list">
           <li className="project-item">
-            <img src={lunet} alt="" className="project-img" />
+            <img src={mechanicalDesign} alt="" className="project-img" />
             <span>Mechanical Design Optimization</span>
           </li>
           <li className="project-item">
-            <img src={mechanical} alt="" className="project-img" />
+            <img src={matlabSimulation} alt="" className="project-img" />
             <span>MATLAB Simulation of Electrical Circuits</span>
           </li>
           <li className="project-item">
-            <img src={programming} alt="" className="project-img" />
+            <img src={autoCAD} alt="" className="project-img" />
+            <span>AutoCAD Drafting and Design</span>
+          </li>
+        </ul>
+      </div> */}
+      <div className="projects" style={{ paddingTop: "1em" }}>
+        <h2
+          className="projects-title"
+          style={{
+            borderBottom: "1px black solid",
+            textAlign: "left",
+            paddingLeft: "2em",
+          }}
+        >
+          Projects
+        </h2>
+        <ul className="projects-list">
+          <li className="project-item">
+            <div className="project-img-container">
+              <img
+                src={mechanicalDesign}
+                alt="Mechanical Design"
+                className="project-img"
+              />
+            </div>
+            <span>Mechanical Design Optimization</span>
+          </li>
+          <li className="project-item">
+            <div className="project-img-container">
+              <img
+                src={matlabSimulation}
+                alt="MATLAB Simulation"
+                className="project-img"
+              />
+            </div>
+            <span>MATLAB Simulation of Electrical Circuits</span>
+          </li>
+          <li className="project-item">
+            <div className="project-img-container">
+              <img src={autoCAD} alt="AutoCAD Design" className="project-img" />
+            </div>
             <span>AutoCAD Drafting and Design</span>
           </li>
         </ul>
       </div>
-      <div className="services" style={{ paddingTop: "1em"}}> 
+      <div className="services" style={{ paddingTop: "1em" }}>
         <LineCo />
       </div>
     </div>
